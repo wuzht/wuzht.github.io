@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -85,7 +85,7 @@
 <meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
 <meta property="og:site_name" content="Wu">
 <meta property="og:description" content="Let&apos;s not waste another second.">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Wu">
 <meta name="twitter:description" content="Let&apos;s not waste another second.">
@@ -98,13 +98,13 @@
     root: '/',
     scheme: 'Pisces',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -124,7 +124,7 @@
 
 
 
-  <title>Archive | Wu</title>
+  <title>归档 | Wu</title>
   
 
 
@@ -136,7 +136,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -184,7 +184,27 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            Home
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
           </a>
         </li>
       
@@ -194,7 +214,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            Archives
+            归档
           </a>
         </li>
       
@@ -230,7 +250,7 @@
         
           
         
-        Um..! 1 post. Keep on posting.
+        嗯..! 目前共计 1 篇日志。 继续努力。
       </span>
 
       
@@ -315,6 +335,8 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="wuzht">
+            
               <p class="site-author-name" itemprop="name">wuzht</p>
               <p class="site-description motion-element" itemprop="description">Let's not waste another second.</p>
           </div>
@@ -327,19 +349,65 @@
                 <a href="/archives/">
               
                   <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuzht" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:770333760@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/ZhengtaoW" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/mrmrwww" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-code"></i>CSDN</a>
+                  </span>
+                
+            </div>
           
 
           
@@ -355,6 +423,13 @@
 
       
 
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
       
 
     </div>
@@ -377,20 +452,34 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
         
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
 
 
 
@@ -402,11 +491,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
