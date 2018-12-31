@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="fr-FR">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="PL0Compiler github地址：https://github.com/wuzht/PL0Compiler  实验内容 在计算机上实现PL0语言的编译程序  扩展PL0语言的功能，并在计算机上实现   实验要做的工作 找到PASCAL编译系统(Delphi系统也可以) 在PASCAL系统上运行PL0编译程序,需要对PL0编译程序作一些修改、调试 在PASCAL系统中，为PL0的编译程序建立">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PL0Compiler">
+<meta property="og:url" content="http://yoursite.com/2018/12/31/PL0Compiler/index.html">
+<meta property="og:site_name" content="Wu">
+<meta property="og:description" content="PL0Compiler github地址：https://github.com/wuzht/PL0Compiler  实验内容 在计算机上实现PL0语言的编译程序  扩展PL0语言的功能，并在计算机上实现   实验要做的工作 找到PASCAL编译系统(Delphi系统也可以) 在PASCAL系统上运行PL0编译程序,需要对PL0编译程序作一些修改、调试 在PASCAL系统中，为PL0的编译程序建立">
+<meta property="og:locale" content="fr-FR">
+<meta property="og:image" content="https://wuzht.github.io/images/1/head.jpg">
+<meta property="og:updated_time" content="2018-12-31T15:58:33.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PL0Compiler">
+<meta name="twitter:description" content="PL0Compiler github地址：https://github.com/wuzht/PL0Compiler  实验内容 在计算机上实现PL0语言的编译程序  扩展PL0语言的功能，并在计算机上实现   实验要做的工作 找到PASCAL编译系统(Delphi系统也可以) 在PASCAL系统上运行PL0编译程序,需要对PL0编译程序作一些修改、调试 在PASCAL系统中，为PL0的编译程序建立">
+<meta name="twitter:image" content="https://wuzht.github.io/images/1/head.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/31/PL0Compiler/">
+
+
+
+
+
+  <title>PL0Compiler | Wu</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="fr-FR">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Accueil
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/PL0Compiler/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuzht">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PL0Compiler</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-31T23:55:30+08:00">
+                2018-12-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Updated at&#58;</span>
+              
+              <time title="Updated at" itemprop="dateModified" datetime="2018-12-31T23:58:33+08:00">
+                2018-12-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/编译原理/" itemprop="url" rel="index">
+                    <span itemprop="name">编译原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/31/PL0Compiler/" class="leancloud_visitors" data-flag-title="PL0Compiler">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  7.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  35
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope="" itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox" href="https://wuzht.github.io/images/1/head.jpg" rel="gallery_cjqcidq7w0002tstwmqcl0mu1" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="https://wuzht.github.io/images/1/head.jpg" itemprop="contentUrl">
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        <h1 id="PL0Compiler"><a href="#PL0Compiler" class="headerlink" title="PL0Compiler"></a>PL0Compiler</h1><blockquote>
+<p>github地址：<a href="https://github.com/wuzht/PL0Compiler" target="_blank" rel="noopener">https://github.com/wuzht/PL0Compiler</a></p>
+</blockquote>
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><ul>
+<li><p>在计算机上实现PL0语言的编译程序</p>
+</li>
+<li><p>扩展PL0语言的功能，并在计算机上实现</p>
+</li>
+</ul>
+<h2 id="实验要做的工作"><a href="#实验要做的工作" class="headerlink" title="实验要做的工作"></a>实验要做的工作</h2><ol>
+<li>找到PASCAL编译系统(Delphi系统也可以)</li>
+<li>在PASCAL系统上运行PL0编译程序,需要对PL0编译程序作一些修改、调试</li>
+<li>在PASCAL系统中，为PL0的编译程序建立输入文件和输出文件<ul>
+<li>在输入文件中存放PL0源程序</li>
+<li>在输出文件中存放PL0源程序被编译后产生的中间代码和运行数据</li>
+</ul>
+</li>
+<li>PL0的编译程序运行时，通过输入文件输入PL0源程序，在输出文件中产生源程序的中间代码然后运行该中间代码，在输出文件中产生运行数据</li>
+<li>如果上述工作成功，则第一项实习任务完成.再做以下工作</li>
+<li>在PL0语言中增加Read和Write语句</li>
+<li>修改PL0编译程序, 使得PL0源程序可以使用Read和Write语句，从文件(或键盘)输入数据，并可以向文件(或屏幕)写数据</li>
+<li>若以上工作完成, 则第2项实验任务完成</li>
+</ol>
+<h2 id="编译系统"><a href="#编译系统" class="headerlink" title="编译系统"></a>编译系统</h2><p>Free Pascal: <a href="https://www.freepascal.org/" target="_blank" rel="noopener">https://www.freepascal.org/</a></p>
+<h2 id="编译运行截图"><a href="#编译运行截图" class="headerlink" title="编译运行截图"></a>编译运行截图</h2><h3 id="Part-1"><a href="#Part-1" class="headerlink" title="Part 1"></a>Part 1</h3><p><img src="/images/PL0Compiler/1.png" alt="1"></p>
+<h3 id="Part-2"><a href="#Part-2" class="headerlink" title="Part 2"></a>Part 2</h3><p><img src="/images/PL0Compiler/2.png" alt="2"></p>
+<h2 id="PL0源程序"><a href="#PL0源程序" class="headerlink" title="PL0源程序"></a>PL0源程序</h2><h3 id="Part-1-1"><a href="#Part-1-1" class="headerlink" title="Part 1"></a>Part 1</h3><p>src.pas</p>
+<figure class="highlight pascal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span>  m = <span class="number">7</span>, n = <span class="number">85</span>;</span><br><span class="line"><span class="keyword">var</span>  x, y, z, q, r;</span><br><span class="line"><span class="function"><span class="keyword">procedure</span>  <span class="title">multiply</span>;</span></span><br><span class="line">  <span class="keyword">var</span>  a, b;</span><br><span class="line">  <span class="keyword">begin</span>  a := x;  b := y;  z := <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> b &gt; <span class="number">0</span> <span class="keyword">do</span></span><br><span class="line"><span class="keyword">begin</span>  </span><br><span class="line">  <span class="keyword">if</span> odd b <span class="keyword">then</span> z := z + a;</span><br><span class="line">  a := <span class="number">2</span>*a ;  b := b/<span class="number">2</span> ;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span>;</span><br><span class="line"><span class="function"><span class="keyword">procedure</span>  <span class="title">divide</span>;</span></span><br><span class="line">  <span class="keyword">var</span>  w;</span><br><span class="line">  <span class="keyword">begin</span>  r := x;  q := <span class="number">0</span>;  w := y;</span><br><span class="line"><span class="keyword">while</span> w @ r <span class="keyword">do</span> w := <span class="number">2</span>*w ;</span><br><span class="line"><span class="keyword">while</span> w &gt; y <span class="keyword">do</span></span><br><span class="line"><span class="keyword">begin</span>  q := <span class="number">2</span>*q;  w := w/<span class="number">2</span>;</span><br><span class="line">  <span class="keyword">if</span> w @ r <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">begin</span>  r := r-w;  q := q+<span class="number">1</span> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span>;</span><br><span class="line"><span class="function"><span class="keyword">procedure</span>  <span class="title">gcd</span>;</span></span><br><span class="line">  <span class="keyword">var</span>  f, g ;</span><br><span class="line">  <span class="keyword">begin</span>  f := x;  g := y;</span><br><span class="line"><span class="keyword">while</span> f ! g <span class="keyword">do</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">  <span class="keyword">if</span> f &lt; g <span class="keyword">then</span> g := g-f;</span><br><span class="line">  <span class="keyword">if</span> g &lt; f <span class="keyword">then</span> f := f-g;</span><br><span class="line"><span class="keyword">end</span>;</span><br><span class="line">z := f</span><br><span class="line">  <span class="keyword">end</span>;</span><br><span class="line"><span class="keyword">begin</span> </span><br><span class="line">  x := m;  y := n;  call multiply;</span><br><span class="line">  x := <span class="number">25</span>;  y:= <span class="number">3</span>;  call divide;</span><br><span class="line">  x := <span class="number">84</span>;  y := <span class="number">36</span>;  call gcd;</span><br><span class="line"><span class="keyword">end</span>.</span><br></pre></td></tr></table></figure>
+<h3 id="Part-2-1"><a href="#Part-2-1" class="headerlink" title="Part 2"></a>Part 2</h3><p>rwsrc.pas</p>
+<figure class="highlight pascal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> input;</span><br><span class="line"><span class="keyword">begin</span> </span><br><span class="line">  <span class="keyword">read</span>(input);</span><br><span class="line">  <span class="keyword">write</span>(input);</span><br><span class="line"><span class="keyword">end</span>.</span><br></pre></td></tr></table></figure>
+<h2 id="PL0编译程序"><a href="#PL0编译程序" class="headerlink" title="PL0编译程序"></a>PL0编译程序</h2><figure class="highlight pascal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br><span class="line">631</span><br><span class="line">632</span><br><span class="line">633</span><br><span class="line">634</span><br><span class="line">635</span><br><span class="line">636</span><br><span class="line">637</span><br><span class="line">638</span><br><span class="line">639</span><br><span class="line">640</span><br><span class="line">641</span><br><span class="line">642</span><br><span class="line">643</span><br><span class="line">644</span><br><span class="line">645</span><br><span class="line">646</span><br><span class="line">647</span><br><span class="line">648</span><br><span class="line">649</span><br><span class="line">650</span><br><span class="line">651</span><br><span class="line">652</span><br><span class="line">653</span><br><span class="line">654</span><br><span class="line">655</span><br><span class="line">656</span><br><span class="line">657</span><br><span class="line">658</span><br><span class="line">659</span><br><span class="line">660</span><br><span class="line">661</span><br><span class="line">662</span><br><span class="line">663</span><br><span class="line">664</span><br><span class="line">665</span><br><span class="line">666</span><br><span class="line">667</span><br><span class="line">668</span><br><span class="line">669</span><br><span class="line">670</span><br><span class="line">671</span><br><span class="line">672</span><br><span class="line">673</span><br><span class="line">674</span><br><span class="line">675</span><br><span class="line">676</span><br><span class="line">677</span><br><span class="line">678</span><br><span class="line">679</span><br><span class="line">680</span><br><span class="line">681</span><br><span class="line">682</span><br><span class="line">683</span><br><span class="line">684</span><br><span class="line">685</span><br><span class="line">686</span><br><span class="line">687</span><br><span class="line">688</span><br><span class="line">689</span><br><span class="line">690</span><br><span class="line">691</span><br><span class="line">692</span><br><span class="line">693</span><br><span class="line">694</span><br><span class="line">695</span><br><span class="line">696</span><br><span class="line">697</span><br><span class="line">698</span><br><span class="line">699</span><br><span class="line">700</span><br><span class="line">701</span><br><span class="line">702</span><br><span class="line">703</span><br><span class="line">704</span><br><span class="line">705</span><br><span class="line">706</span><br><span class="line">707</span><br><span class="line">708</span><br><span class="line">709</span><br><span class="line">710</span><br><span class="line">711</span><br><span class="line">712</span><br><span class="line">713</span><br><span class="line">714</span><br><span class="line">715</span><br><span class="line">716</span><br><span class="line">717</span><br><span class="line">718</span><br><span class="line">719</span><br><span class="line">720</span><br><span class="line">721</span><br><span class="line">722</span><br><span class="line">723</span><br><span class="line">724</span><br><span class="line">725</span><br><span class="line">726</span><br><span class="line">727</span><br><span class="line">728</span><br><span class="line">729</span><br><span class="line">730</span><br><span class="line">731</span><br><span class="line">732</span><br><span class="line">733</span><br><span class="line">734</span><br><span class="line">735</span><br><span class="line">736</span><br><span class="line">737</span><br><span class="line">738</span><br><span class="line">739</span><br><span class="line">740</span><br><span class="line">741</span><br><span class="line">742</span><br><span class="line">743</span><br><span class="line">744</span><br><span class="line">745</span><br><span class="line">746</span><br><span class="line">747</span><br><span class="line">748</span><br><span class="line">749</span><br><span class="line">750</span><br><span class="line">751</span><br><span class="line">752</span><br><span class="line">753</span><br><span class="line">754</span><br><span class="line">755</span><br><span class="line">756</span><br><span class="line">757</span><br><span class="line">758</span><br><span class="line">759</span><br><span class="line">760</span><br><span class="line">761</span><br><span class="line">762</span><br><span class="line">763</span><br><span class="line">764</span><br><span class="line">765</span><br><span class="line">766</span><br><span class="line">767</span><br><span class="line">768</span><br><span class="line">769</span><br><span class="line">770</span><br><span class="line">771</span><br><span class="line">772</span><br><span class="line">773</span><br><span class="line">774</span><br><span class="line">775</span><br><span class="line">776</span><br><span class="line">777</span><br><span class="line">778</span><br><span class="line">779</span><br><span class="line">780</span><br><span class="line">781</span><br><span class="line">782</span><br><span class="line">783</span><br><span class="line">784</span><br><span class="line">785</span><br><span class="line">786</span><br><span class="line">787</span><br><span class="line">788</span><br><span class="line">789</span><br><span class="line">790</span><br><span class="line">791</span><br><span class="line">792</span><br><span class="line">793</span><br><span class="line">794</span><br><span class="line">795</span><br><span class="line">796</span><br><span class="line">797</span><br><span class="line">798</span><br><span class="line">799</span><br><span class="line">800</span><br><span class="line">801</span><br><span class="line">802</span><br><span class="line">803</span><br><span class="line">804</span><br><span class="line">805</span><br><span class="line">806</span><br><span class="line">807</span><br><span class="line">808</span><br><span class="line">809</span><br><span class="line">810</span><br><span class="line">811</span><br><span class="line">812</span><br><span class="line">813</span><br><span class="line">814</span><br><span class="line">815</span><br><span class="line">816</span><br><span class="line">817</span><br><span class="line">818</span><br><span class="line">819</span><br><span class="line">820</span><br><span class="line">821</span><br><span class="line">822</span><br><span class="line">823</span><br><span class="line">824</span><br><span class="line">825</span><br><span class="line">826</span><br><span class="line">827</span><br><span class="line">828</span><br><span class="line">829</span><br><span class="line">830</span><br><span class="line">831</span><br><span class="line">832</span><br><span class="line">833</span><br><span class="line">834</span><br><span class="line">835</span><br><span class="line">836</span><br><span class="line">837</span><br><span class="line">838</span><br><span class="line">839</span><br><span class="line">840</span><br><span class="line">841</span><br><span class="line">842</span><br><span class="line">843</span><br><span class="line">844</span><br><span class="line">845</span><br><span class="line">846</span><br><span class="line">847</span><br><span class="line">848</span><br><span class="line">849</span><br><span class="line">850</span><br><span class="line">851</span><br><span class="line">852</span><br><span class="line">853</span><br><span class="line">854</span><br><span class="line">855</span><br><span class="line">856</span><br><span class="line">857</span><br><span class="line">858</span><br><span class="line">859</span><br><span class="line">860</span><br><span class="line">861</span><br><span class="line">862</span><br><span class="line">863</span><br><span class="line">864</span><br><span class="line">865</span><br><span class="line">866</span><br><span class="line">867</span><br><span class="line">868</span><br><span class="line">869</span><br><span class="line">870</span><br><span class="line">871</span><br><span class="line">872</span><br><span class="line">873</span><br><span class="line">874</span><br><span class="line">875</span><br><span class="line">876</span><br><span class="line">877</span><br><span class="line">878</span><br><span class="line">879</span><br><span class="line">880</span><br><span class="line">881</span><br><span class="line">882</span><br><span class="line">883</span><br><span class="line">884</span><br><span class="line">885</span><br><span class="line">886</span><br><span class="line">887</span><br><span class="line">888</span><br><span class="line">889</span><br><span class="line">890</span><br><span class="line">891</span><br><span class="line">892</span><br><span class="line">893</span><br><span class="line">894</span><br><span class="line">895</span><br><span class="line">896</span><br><span class="line">897</span><br><span class="line">898</span><br><span class="line">899</span><br><span class="line">900</span><br><span class="line">901</span><br><span class="line">902</span><br><span class="line">903</span><br><span class="line">904</span><br><span class="line">905</span><br><span class="line">906</span><br><span class="line">907</span><br><span class="line">908</span><br><span class="line">909</span><br><span class="line">910</span><br><span class="line">911</span><br><span class="line">912</span><br><span class="line">913</span><br><span class="line">914</span><br><span class="line">915</span><br><span class="line">916</span><br><span class="line">917</span><br><span class="line">918</span><br><span class="line">919</span><br><span class="line">920</span><br><span class="line">921</span><br><span class="line">922</span><br><span class="line">923</span><br><span class="line">924</span><br><span class="line">925</span><br><span class="line">926</span><br><span class="line">927</span><br><span class="line">928</span><br><span class="line">929</span><br><span class="line">930</span><br><span class="line">931</span><br><span class="line">932</span><br><span class="line">933</span><br><span class="line">934</span><br><span class="line">935</span><br><span class="line">936</span><br><span class="line">937</span><br><span class="line">938</span><br><span class="line">939</span><br><span class="line">940</span><br><span class="line">941</span><br><span class="line">942</span><br><span class="line">943</span><br><span class="line">944</span><br><span class="line">945</span><br><span class="line">946</span><br><span class="line">947</span><br><span class="line">948</span><br><span class="line">949</span><br><span class="line">950</span><br><span class="line">951</span><br><span class="line">952</span><br><span class="line">953</span><br><span class="line">954</span><br><span class="line">955</span><br><span class="line">956</span><br><span class="line">957</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&#123;PL0编译程序注释&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Program</span>  PL0 (input, output);</span><br><span class="line"><span class="comment">&#123;带有代码生成的PL0编译程序&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Const</span> </span><br><span class="line">  norw = <span class="number">13</span>; <span class="comment">&#123;保留字的个数&#125;</span></span><br><span class="line">  txmax = <span class="number">100</span>; <span class="comment">&#123;标识符表长度&#125;</span></span><br><span class="line">  nmax = <span class="number">14</span>; <span class="comment">&#123;数字的最大位数&#125;</span></span><br><span class="line">  al = <span class="number">10</span>; <span class="comment">&#123;标识符的长度&#125;</span></span><br><span class="line">  amax = <span class="number">2047</span>; <span class="comment">&#123;最大地址&#125;</span></span><br><span class="line">  levmax = <span class="number">3</span>; <span class="comment">&#123;程序体嵌套的最大深度&#125;</span></span><br><span class="line">  cxmax = <span class="number">200</span>; <span class="comment">&#123;代码数组的大小&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Type</span> </span><br><span class="line">  symbol = (nul, ident, number, plus, minus, times, slash, oddsym,</span><br><span class="line">            eql, neq, lss, leq, gtr, geq, lparen, rparen, comma, semicolon,</span><br><span class="line">            period, becomes, beginsym, endsym, ifsym, thensym,</span><br><span class="line">            whilesym, dosym, callsym, constsym, varsym, procsym,</span><br><span class="line">            readsym, writesym);</span><br><span class="line">  alfa = <span class="keyword">packed</span> <span class="keyword">array</span> [<span class="number">1</span>..al] <span class="keyword">Of</span> char;</span><br><span class="line">  Object2 = (constant, variable, Procedure2);</span><br><span class="line">  symset = <span class="keyword">set</span> <span class="keyword">Of</span> symbol;</span><br><span class="line">  fct = (lit, opr, lod, sto, cal, int, jmp, jpc, red, wrt); <span class="comment">&#123;functions&#125;</span></span><br><span class="line">  instruction = <span class="keyword">packed</span> <span class="keyword">Record</span></span><br><span class="line">    f : fct;  <span class="comment">&#123;功能码&#125;</span></span><br><span class="line">    l : <span class="number">0</span>..levmax; <span class="comment">&#123;相对层数&#125;</span></span><br><span class="line">    a : <span class="number">0</span>..amax; <span class="comment">&#123;相对地址&#125;</span></span><br><span class="line"><span class="keyword">End</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">&#123;LIT 0,a : 取常数a</span></span><br><span class="line"><span class="comment">OPR 0,a : 执行运算a</span></span><br><span class="line"><span class="comment">LOD l,a : 取层差为l的层﹑相对地址为a的变量</span></span><br><span class="line"><span class="comment">STO l,a : 存到层差为l的层﹑相对地址为a的变量</span></span><br><span class="line"><span class="comment">CAL l,a : 调用层差为l的过程</span></span><br><span class="line"><span class="comment">INT 0,a : t寄存器增加a</span></span><br><span class="line"><span class="comment">JMP 0,a : 转移到指令地址a处</span></span><br><span class="line"><span class="comment">JPC 0,a : 条件转移到指令地址a处 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Var</span> </span><br><span class="line">  ch : char; <span class="comment">&#123;最近读到的字符&#125;</span></span><br><span class="line">  sym : symbol; <span class="comment">&#123;最近读到的符号&#125;</span></span><br><span class="line">  id : alfa; <span class="comment">&#123;最近读到的标识符&#125;</span></span><br><span class="line">  num : integer; <span class="comment">&#123;最近读到的数&#125;</span></span><br><span class="line">  cc : integer; <span class="comment">&#123;当前行的字符计数&#125;</span></span><br><span class="line">  ll : integer; <span class="comment">&#123;当前行的长度&#125;</span></span><br><span class="line">  kk, err : integer;</span><br><span class="line">  cx : integer; <span class="comment">&#123;代码数组的当前下标&#125;</span></span><br><span class="line">  line : <span class="keyword">array</span> [<span class="number">1</span>..<span class="number">81</span>] <span class="keyword">Of</span> char; <span class="comment">&#123;当前行&#125;</span></span><br><span class="line">  a : alfa; <span class="comment">&#123;当前标识符的字符串&#125;</span></span><br><span class="line">  code : <span class="keyword">array</span> [<span class="number">0</span>..cxmax] <span class="keyword">Of</span> instruction; <span class="comment">&#123;中间代码数组&#125;</span></span><br><span class="line">  word : <span class="keyword">array</span> [<span class="number">1</span>..norw] <span class="keyword">Of</span> alfa; <span class="comment">&#123;存放保留字的字符串&#125;</span></span><br><span class="line">  wsym : <span class="keyword">array</span> [<span class="number">1</span>..norw] <span class="keyword">Of</span> symbol; <span class="comment">&#123;存放保留字的记号&#125;</span></span><br><span class="line">  ssym : <span class="keyword">array</span> [char] <span class="keyword">Of</span> symbol; <span class="comment">&#123;存放算符和标点符号的记号&#125;</span></span><br><span class="line">  mnemonic : <span class="keyword">array</span> [fct] <span class="keyword">Of</span> <span class="keyword">packed</span> <span class="keyword">array</span> [<span class="number">1</span>..<span class="number">5</span>] <span class="keyword">Of</span> char;</span><br><span class="line">  <span class="comment">&#123;中间代码算符的字符串&#125;</span></span><br><span class="line">  declbegsys, statbegsys, facbegsys : symset;</span><br><span class="line">  table : <span class="keyword">array</span> [<span class="number">0</span>..txmax] <span class="keyword">Of</span> <span class="comment">&#123;符号表&#125;</span></span><br><span class="line">    <span class="keyword">Record</span></span><br><span class="line">      <span class="keyword">name</span> : alfa;</span><br><span class="line">      <span class="keyword">Case</span> kind : Object2 <span class="keyword">Of</span> constant : (val : integer);</span><br><span class="line">      variable, Procedure2 : (level, adr : integer)</span><br><span class="line">    <span class="keyword">End</span>;</span><br><span class="line">  fin, fout : text; <span class="comment">&#123;fin, fout是文本文件&#125;</span></span><br><span class="line">  srcfile, dstfile : <span class="keyword">string</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">Procedure</span> <span class="title">error</span> <span class="params">(n : integer)</span>;</span></span><br><span class="line"><span class="keyword">Begin</span></span><br><span class="line">  writeln(<span class="string">'****'</span>, <span class="string">' '</span> : cc-<span class="number">1</span>, <span class="string">'^'</span>, n : <span class="number">2</span>);</span><br><span class="line">  err := err + <span class="number">1</span></span><br><span class="line">  <span class="comment">&#123;cc为当前行已读的字符数, n为错误号&#125;</span><span class="comment">&#123;错误数err加1&#125;</span></span><br><span class="line"><span class="keyword">End</span> <span class="comment">&#123;error&#125;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">Procedure</span> <span class="title">getsym</span>;</span></span><br><span class="line">  <span class="keyword">Var</span>  i, j, k : integer;</span><br><span class="line">  <span class="function"><span class="keyword">Procedure</span>  <span class="title">getch</span>;</span> <span class="comment">&#123;取下一字符&#125;</span></span><br><span class="line">  <span class="keyword">Begin</span> <span class="keyword">If</span> cc = ll <span class="keyword">Then</span> <span class="comment">&#123;如果cc指向行末&#125;</span></span><br><span class="line">    <span class="keyword">Begin</span> <span class="keyword">If</span> eof(fin) <span class="keyword">Then</span> <span class="comment">&#123;如果已到文件尾&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          <span class="keyword">write</span>(<span class="string">'Program INCOMPLETE'</span>);</span><br><span class="line">          writeln(fout, <span class="string">'Program INCOMPLETE'</span>);</span><br><span class="line">          close(fin);</span><br><span class="line">          close(fout);</span><br><span class="line">          <span class="comment">// goto 99</span></span><br><span class="line">          <span class="keyword">exit</span>(); <span class="comment">&#123;相当于goto 99&#125;</span></span><br><span class="line">        <span class="keyword">End</span>;</span><br><span class="line">      <span class="comment">&#123;读新的一行&#125;</span></span><br><span class="line">      ll := <span class="number">0</span>;</span><br><span class="line">      cc := <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">write</span>(cx : <span class="number">5</span>, <span class="string">' '</span>); <span class="comment">&#123;cx : 5位数&#125;</span></span><br><span class="line">      <span class="keyword">write</span>(fout, cx : <span class="number">5</span>, <span class="string">' '</span>);</span><br><span class="line">      <span class="keyword">While</span> <span class="keyword">not</span> eoln(fin) <span class="keyword">Do</span> <span class="comment">&#123;如果不是行末&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          ll := ll + <span class="number">1</span>;</span><br><span class="line">          <span class="keyword">read</span>(fin, ch);</span><br><span class="line">          <span class="keyword">write</span>(ch);</span><br><span class="line">          <span class="keyword">write</span>(fout, ch);</span><br><span class="line">          line[ll] := ch  <span class="comment">&#123;一次读一行入line&#125;</span></span><br><span class="line">        <span class="keyword">End</span>;</span><br><span class="line">      writeln;</span><br><span class="line">      writeln(fout);</span><br><span class="line">      readln(fin);</span><br><span class="line">      ll := ll + <span class="number">1</span>;</span><br><span class="line">      <span class="comment">// read(line[ll])  &#123;line[ll]中是行末符&#125;</span></span><br><span class="line">      line[ll] := <span class="string">' '</span></span><br><span class="line">    <span class="keyword">End</span>;</span><br><span class="line">    cc := cc + <span class="number">1</span>;</span><br><span class="line">    ch := line[cc]  <span class="comment">&#123;ch取line中下一个字符&#125;</span></span><br><span class="line">  <span class="keyword">End</span> <span class="comment">&#123;getch&#125;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">Begin</span> <span class="comment">&#123;getsym&#125;</span></span><br><span class="line">  <span class="keyword">while</span> ch = <span class="string">' '</span> <span class="keyword">do</span> </span><br><span class="line">    getch; <span class="comment">&#123;跳过无用空白&#125;</span></span><br><span class="line">  <span class="keyword">If</span> ch <span class="keyword">In</span> [<span class="string">'a'</span>..<span class="string">'z'</span>] <span class="keyword">Then</span></span><br><span class="line">    <span class="keyword">Begin</span> <span class="comment">&#123;标识符或保留字&#125;</span></span><br><span class="line">      k := <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">Repeat</span> <span class="comment">&#123;处理字母开头的字母﹑数字串&#125;</span></span><br><span class="line">        <span class="keyword">If</span> k &lt; al <span class="keyword">Then</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          k := k + <span class="number">1</span>;</span><br><span class="line">          a[k] := ch</span><br><span class="line">        <span class="keyword">End</span>;</span><br><span class="line">        getch</span><br><span class="line">      <span class="keyword">Until</span> <span class="keyword">not</span> (ch <span class="keyword">In</span> [<span class="string">'a'</span>..<span class="string">'z'</span>, <span class="string">'0'</span>..<span class="string">'9'</span>]);</span><br><span class="line">      <span class="keyword">If</span> k &gt;= kk <span class="keyword">Then</span> </span><br><span class="line">        kk := k</span><br><span class="line">      <span class="keyword">Else</span> <span class="keyword">Repeat</span></span><br><span class="line">        a[kk] := <span class="string">' '</span>;</span><br><span class="line">        kk := kk-<span class="number">1</span>  <span class="comment">&#123;如果标识符长度不是最大长度, 后面补空白&#125;</span></span><br><span class="line">      <span class="keyword">until</span> kk = k;                </span><br><span class="line">      id := a;</span><br><span class="line">      i := <span class="number">1</span>;</span><br><span class="line">      j := norw;</span><br><span class="line">      <span class="comment">&#123;id中存放当前标识符或保留字的字符串&#125;</span></span><br><span class="line">      <span class="keyword">Repeat</span></span><br><span class="line">        k := (i+j) <span class="keyword">Div</span> <span class="number">2</span>; <span class="comment">&#123;用二分查找法在保留字表中找当前的标识符id&#125;</span></span><br><span class="line">        <span class="keyword">if</span> id &lt;= word[k] <span class="keyword">then</span> j := k-<span class="number">1</span>;  </span><br><span class="line">        <span class="keyword">If</span> id &gt;= word[k] <span class="keyword">Then</span> i := k+<span class="number">1</span></span><br><span class="line">      <span class="keyword">Until</span> i &gt; j;</span><br><span class="line">      <span class="keyword">If</span> i-<span class="number">1</span> &gt; j <span class="keyword">Then</span> sym := wsym[k] <span class="keyword">Else</span> sym := ident</span><br><span class="line">      <span class="comment">&#123;如果找到, 当前记号sym为保留字, 否则sym为标识符&#125;</span></span><br><span class="line">    <span class="keyword">End</span></span><br><span class="line">      </span><br><span class="line">  <span class="keyword">Else</span> <span class="keyword">If</span> ch <span class="keyword">In</span> [<span class="string">'0'</span>..<span class="string">'9'</span>] <span class="keyword">Then</span></span><br><span class="line">    <span class="keyword">Begin</span> <span class="comment">&#123;数字&#125;</span></span><br><span class="line">      k := <span class="number">0</span>; num := <span class="number">0</span>; sym := number; <span class="comment">&#123;当前记号sym为数字&#125;</span></span><br><span class="line">      <span class="keyword">Repeat</span> <span class="comment">&#123;计算数字串的值&#125;</span></span><br><span class="line">        num := <span class="number">10</span>*num + (ord(ch)-ord(<span class="string">'0'</span>));</span><br><span class="line">        <span class="comment">&#123;ord(ch)和ord(0)是ch和0在ASCII码中的序号&#125;</span></span><br><span class="line">        k := k + <span class="number">1</span>;</span><br><span class="line">        getch;</span><br><span class="line">      <span class="keyword">Until</span> <span class="keyword">not</span> (ch <span class="keyword">In</span> [<span class="string">'0'</span>..<span class="string">'9'</span>]); <span class="comment">&#123;直到输入的不是数字&#125;</span></span><br><span class="line">      <span class="keyword">If</span> k &gt; nmax <span class="keyword">Then</span> error(<span class="number">30</span>)</span><br><span class="line">      <span class="comment">&#123;当前数字串的长度超过上界,则报告错误&#125;</span></span><br><span class="line">    <span class="keyword">End</span></span><br><span class="line">      </span><br><span class="line">  <span class="keyword">Else</span> <span class="keyword">If</span> ch = <span class="string">':'</span> <span class="keyword">Then</span> <span class="comment">&#123;处理赋值号&#125;</span></span><br><span class="line">    <span class="keyword">Begin</span></span><br><span class="line">      getch;</span><br><span class="line">      <span class="keyword">If</span> ch = <span class="string">'='</span> <span class="keyword">Then</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          sym := becomes;</span><br><span class="line">          getch</span><br><span class="line">        <span class="keyword">End</span></span><br><span class="line">      <span class="keyword">Else</span> </span><br><span class="line">        sym := nul;</span><br><span class="line">    <span class="keyword">End</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">Else</span> <span class="comment">&#123;处理其它算符或标点符号&#125;</span></span><br><span class="line">    <span class="keyword">Begin</span></span><br><span class="line">      sym := ssym[ch];</span><br><span class="line">      getch</span><br><span class="line">    <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span> <span class="comment">&#123;getsym&#125;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">Procedure</span>  <span class="title">gen</span><span class="params">(x : fct; y, z : integer)</span>;</span></span><br><span class="line"><span class="keyword">Begin</span></span><br><span class="line">  <span class="keyword">If</span> cx &gt; cxmax <span class="keyword">Then</span> <span class="comment">&#123;如果当前指令序号&gt;代码的最大长度&#125;</span></span><br><span class="line">    <span class="keyword">Begin</span></span><br><span class="line">      <span class="keyword">write</span>(<span class="string">'Program TOO LONG'</span>);</span><br><span class="line">      writeln(fout);</span><br><span class="line">      close(fin);</span><br><span class="line">      <span class="comment">// goto 99</span></span><br><span class="line">      <span class="keyword">exit</span>();</span><br><span class="line">    <span class="keyword">End</span>;</span><br><span class="line">  <span class="keyword">With</span> code[cx] <span class="keyword">Do</span> <span class="comment">&#123;在代码数组cx位置生成一条新代码&#125;</span></span><br><span class="line">    <span class="keyword">Begin</span></span><br><span class="line">      f := x; <span class="comment">&#123;功能码&#125;</span></span><br><span class="line">      l := y; <span class="comment">&#123;层号&#125;</span></span><br><span class="line">      a := z <span class="comment">&#123;地址&#125;</span></span><br><span class="line">    <span class="keyword">End</span>;</span><br><span class="line">  cx := cx + <span class="number">1</span> <span class="comment">&#123;指令序号加1&#125;</span></span><br><span class="line"><span class="keyword">End</span> <span class="comment">&#123;gen&#125;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">Procedure</span>  <span class="title">test</span><span class="params">(s1, s2 : symset; n : integer)</span>;</span></span><br><span class="line"><span class="keyword">Begin</span></span><br><span class="line">  <span class="keyword">If</span> <span class="keyword">not</span> (sym <span class="keyword">In</span> s1) <span class="keyword">Then</span></span><br><span class="line">  <span class="comment">&#123;如果当前记号不属于集合S1,则报告错误n&#125;</span></span><br><span class="line">    <span class="keyword">Begin</span></span><br><span class="line">      error(n);</span><br><span class="line">      s1 := s1 + s2;</span><br><span class="line">      <span class="keyword">While</span> <span class="keyword">not</span> (sym <span class="keyword">In</span> s1) <span class="keyword">Do</span></span><br><span class="line">        getsym</span><br><span class="line">        <span class="comment">&#123;跳过一些记号, 直到当前记号属于S1∪S2&#125;</span></span><br><span class="line">    <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span> <span class="comment">&#123;test&#125;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">Procedure</span>  <span class="title">block</span><span class="params">(lev, tx : integer; fsys : symset)</span>;</span></span><br><span class="line">  <span class="keyword">Var</span> dx : integer; <span class="comment">&#123;本过程数据空间分配下标&#125;</span></span><br><span class="line">      tx0 : integer; <span class="comment">&#123;本过程标识表起始下标&#125;</span></span><br><span class="line">      cx0 : integer; <span class="comment">&#123;本过程代码起始下标&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">Procedure</span>  <span class="title">enter</span><span class="params">(k : Object2)</span>;</span></span><br><span class="line">  <span class="keyword">Begin</span> <span class="comment">&#123;把object填入符号表中&#125;</span></span><br><span class="line">    tx := tx +<span class="number">1</span>; <span class="comment">&#123;符号表指针加1&#125;</span></span><br><span class="line">    <span class="keyword">With</span> table[tx] <span class="keyword">Do</span><span class="comment">&#123;在符号表中增加新的一个条目&#125;</span></span><br><span class="line">    <span class="keyword">Begin</span></span><br><span class="line">      <span class="keyword">name</span> := id; <span class="comment">&#123;当前标识符的名字&#125;</span></span><br><span class="line">      kind := k; <span class="comment">&#123;当前标识符的种类&#125;</span></span><br><span class="line">      <span class="keyword">Case</span> k <span class="keyword">Of</span> </span><br><span class="line">        constant :</span><br><span class="line">          <span class="keyword">Begin</span> <span class="comment">&#123;当前标识符是常数名&#125;</span></span><br><span class="line">            <span class="keyword">If</span> num &gt; amax <span class="keyword">Then</span> <span class="comment">&#123;当前常数值大于上界,则出错&#125;</span></span><br><span class="line">              <span class="keyword">Begin</span> error(<span class="number">30</span>); num := <span class="number">0</span> <span class="keyword">End</span>;</span><br><span class="line">            val := num</span><br><span class="line">          <span class="keyword">End</span>;</span><br><span class="line">        variable :</span><br><span class="line">          <span class="keyword">Begin</span> <span class="comment">&#123;当前标识符是变量名&#125;</span></span><br><span class="line">            level := lev; <span class="comment">&#123;定义该变量的过程的嵌套层数&#125;</span></span><br><span class="line">            adr := dx; <span class="comment">&#123;变量地址为当前过程数据空间栈顶&#125;</span></span><br><span class="line">            dx := dx +<span class="number">1</span>; <span class="comment">&#123;栈顶指针加1&#125;</span></span><br><span class="line">          <span class="keyword">End</span>;</span><br><span class="line">        Procedure2 : level := lev <span class="comment">&#123;本过程的嵌套层数&#125;</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">    <span class="keyword">End</span></span><br><span class="line">  <span class="keyword">End</span> <span class="comment">&#123;enter&#125;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">Function</span>  <span class="title">position</span><span class="params">(id : alfa)</span> :</span> integer; <span class="comment">&#123;返回id在符号表的入口&#125;</span></span><br><span class="line">    <span class="keyword">Var</span>  i : integer;</span><br><span class="line">  <span class="keyword">Begin</span> <span class="comment">&#123;在标识符表中查标识符id&#125;</span></span><br><span class="line">    table[<span class="number">0</span>].<span class="keyword">name</span> := id; <span class="comment">&#123;在符号表栈的最下方预填标识符id&#125;</span></span><br><span class="line">    i := tx; <span class="comment">&#123;符号表栈顶指针&#125;</span></span><br><span class="line">    <span class="keyword">While</span> table[i].<span class="keyword">name</span> &lt;&gt; id <span class="keyword">Do</span> i := i-<span class="number">1</span>;</span><br><span class="line">    <span class="comment">&#123;从符号表栈顶往下查标识符id&#125;</span></span><br><span class="line">    position := i <span class="comment">&#123;若查到,i为id的入口,否则i=0 &#125;</span></span><br><span class="line">  <span class="keyword">End</span> <span class="comment">&#123;position&#125;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">Procedure</span> <span class="title">constdeclaration</span>;</span></span><br><span class="line">  <span class="keyword">Begin</span></span><br><span class="line">    <span class="keyword">If</span> sym = ident <span class="keyword">Then</span> <span class="comment">&#123;当前记号是常数名&#125;</span></span><br><span class="line">      <span class="keyword">Begin</span></span><br><span class="line">        getsym;</span><br><span class="line">        <span class="keyword">If</span> sym <span class="keyword">In</span> [eql, becomes] <span class="keyword">Then</span> <span class="comment">&#123;当前记号是等号或赋值号&#125;</span></span><br><span class="line">          <span class="keyword">Begin</span></span><br><span class="line">            <span class="keyword">If</span> sym = becomes <span class="keyword">Then</span> error(<span class="number">1</span>);</span><br><span class="line">              <span class="comment">&#123;如果当前记号是赋值号,则出错&#125;</span></span><br><span class="line">            getsym;</span><br><span class="line">            <span class="keyword">If</span> sym = number <span class="keyword">Then</span> <span class="comment">&#123;等号后面是常数&#125;</span></span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                enter(constant); <span class="comment">&#123;将常数名加入符号表&#125;</span></span><br><span class="line">                getsym</span><br><span class="line">              <span class="keyword">End</span></span><br><span class="line">            <span class="keyword">Else</span> error(<span class="number">2</span>) <span class="comment">&#123;等号后面不是常数出错&#125;</span></span><br><span class="line">          <span class="keyword">End</span></span><br><span class="line">        <span class="keyword">Else</span> error(<span class="number">3</span>) <span class="comment">&#123;标识符后不是等号或赋值号出错&#125;</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">    <span class="keyword">Else</span> error(<span class="number">4</span>) <span class="comment">&#123;常数说明中没有常数名标识符&#125;</span></span><br><span class="line">  <span class="keyword">End</span> <span class="comment">&#123;constdeclaration&#125;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">Procedure</span>  <span class="title">vardeclaration</span>;</span></span><br><span class="line">  <span class="keyword">Begin</span></span><br><span class="line">    <span class="keyword">If</span> sym = ident <span class="keyword">Then</span> <span class="comment">&#123;如果当前记号是标识符&#125;</span></span><br><span class="line">      <span class="keyword">Begin</span></span><br><span class="line">        enter(variable); <span class="comment">&#123;将该变量名加入符号表的下一条目&#125;</span></span><br><span class="line">        getsym</span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">    <span class="keyword">Else</span> error(<span class="number">4</span>) <span class="comment">&#123;如果变量说明未出现标识符,则出错&#125;</span></span><br><span class="line">  <span class="keyword">End</span> <span class="comment">&#123;vardeclaration&#125;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">Procedure</span>  <span class="title">listcode</span>;</span></span><br><span class="line">    <span class="keyword">Var</span>  i : integer;</span><br><span class="line">  <span class="keyword">Begin</span>  <span class="comment">&#123;列出本程序体生成的代码&#125;</span></span><br><span class="line">    <span class="keyword">For</span> i := cx0 <span class="keyword">To</span> cx-<span class="number">1</span> <span class="keyword">Do</span></span><br><span class="line">    <span class="comment">&#123;cx0: 本过程第一个代码的序号, cx-1: 本过程最后一个代码的序号&#125;</span></span><br><span class="line">      <span class="keyword">With</span> code[i] <span class="keyword">Do</span> <span class="comment">&#123;打印第i条代码&#125;</span></span><br><span class="line">        writeln(fout, i:<span class="number">3</span>, mnemonic[f] : <span class="number">5</span>, l : <span class="number">3</span>, a : <span class="number">5</span>)</span><br><span class="line">    <span class="comment">&#123;i: 代码序号; </span></span><br><span class="line"><span class="comment">    mnemonic[f]: 功能码的字符串;</span></span><br><span class="line"><span class="comment">    l: 相对层号(层差);</span></span><br><span class="line"><span class="comment">    a: 相对地址或运算号码&#125;</span></span><br><span class="line">  <span class="keyword">End</span> <span class="comment">&#123;listcode&#125;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">Procedure</span>  <span class="title">statement</span><span class="params">(fsys : symset)</span>;</span></span><br><span class="line">    <span class="keyword">Var</span>  i, cx1, cx2 : integer;</span><br><span class="line">    <span class="function"><span class="keyword">Procedure</span>  <span class="title">expression</span><span class="params">(fsys : symset)</span>;</span></span><br><span class="line">      <span class="keyword">Var</span>  addop : symbol;</span><br><span class="line">      <span class="function"><span class="keyword">Procedure</span>  <span class="title">term</span><span class="params">(fsys : symset)</span>;</span></span><br><span class="line">        <span class="keyword">Var</span>  mulop : symbol;</span><br><span class="line">        <span class="function"><span class="keyword">Procedure</span>  <span class="title">factor</span><span class="params">(fsys : symset)</span>;</span></span><br><span class="line">          <span class="keyword">Var</span> i : integer;</span><br><span class="line">          <span class="keyword">Begin</span></span><br><span class="line">            test(facbegsys, fsys, <span class="number">24</span>);</span><br><span class="line">            <span class="comment">&#123;测试当前的记号是否因子的开始符号, </span></span><br><span class="line"><span class="comment">            否则出错, 跳过一些记号&#125;</span></span><br><span class="line">            <span class="keyword">While</span> sym <span class="keyword">In</span> facbegsys <span class="keyword">Do</span></span><br><span class="line">            <span class="comment">&#123;如果当前的记号是否因子的开始符号&#125;</span></span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                <span class="keyword">If</span> sym = ident <span class="keyword">Then</span> <span class="comment">&#123;当前记号是标识符&#125;</span></span><br><span class="line">                  <span class="keyword">Begin</span></span><br><span class="line">                    i := position(id); <span class="comment">&#123;查符号表,返回id的入口&#125;</span></span><br><span class="line">                    <span class="keyword">If</span> i = <span class="number">0</span> <span class="keyword">Then</span> error(<span class="number">11</span>)</span><br><span class="line">                    <span class="keyword">Else</span></span><br><span class="line">                    <span class="comment">&#123;若在符号表中查不到id, 则出错, 否则,做以下工作&#125;</span></span><br><span class="line">                    <span class="keyword">With</span> table[i] <span class="keyword">Do</span></span><br><span class="line">                      <span class="keyword">Case</span> kind <span class="keyword">Of</span> </span><br><span class="line">                        constant : gen(lit, <span class="number">0</span>, val);</span><br><span class="line">                        <span class="comment">&#123;若id是常数, 生成指令,将常数val取到栈顶&#125;</span></span><br><span class="line">                        variable : gen(lod, lev-level, adr);</span><br><span class="line">                        <span class="comment">&#123;若id是变量, 生成指令,将该变量取到栈顶;</span></span><br><span class="line"><span class="comment">                          lev: 当前语句所在过程的层号;</span></span><br><span class="line"><span class="comment">                          level: 定义该变量的过程层号;</span></span><br><span class="line"><span class="comment">                          adr: 变量在其过程的数据空间的相对地址&#125;</span></span><br><span class="line">                        Procedure2 : error(<span class="number">21</span>)</span><br><span class="line">                        <span class="comment">&#123;若id是过程名, 则出错&#125;</span></span><br><span class="line">                      <span class="keyword">End</span>;</span><br><span class="line">                    getsym <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">                  <span class="keyword">End</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">Else</span> <span class="keyword">If</span> sym = number <span class="keyword">Then</span> <span class="comment">&#123;当前记号是数字&#125;</span></span><br><span class="line">                  <span class="keyword">Begin</span></span><br><span class="line">                    <span class="keyword">If</span> num &gt; amax <span class="keyword">Then</span> <span class="comment">&#123;若数值越界,则出错&#125;</span></span><br><span class="line">                    <span class="keyword">Begin</span></span><br><span class="line">                      error(<span class="number">30</span>);</span><br><span class="line">                      num := <span class="number">0</span></span><br><span class="line">                    <span class="keyword">End</span>;</span><br><span class="line">                    gen(lit, <span class="number">0</span>, num);</span><br><span class="line">                    <span class="comment">&#123;生成一条指令, 将常数num取到栈顶&#125;</span></span><br><span class="line">                    getsym <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">                  <span class="keyword">End</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">Else</span> <span class="keyword">If</span> sym = lparen <span class="keyword">Then</span> <span class="comment">&#123;如果当前记号是左括号&#125;</span></span><br><span class="line">                  <span class="keyword">Begin</span></span><br><span class="line">                    getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">                    expression([rparen]+fsys); <span class="comment">&#123;处理表达式&#125;</span></span><br><span class="line">                    <span class="keyword">If</span> sym = rparen <span class="keyword">Then</span> getsym</span><br><span class="line">                    <span class="comment">&#123;如果当前记号是右括号, 则取下一记号,否则出错&#125;</span></span><br><span class="line">                    <span class="keyword">Else</span> error(<span class="number">22</span>)</span><br><span class="line">                  <span class="keyword">End</span>;</span><br><span class="line"></span><br><span class="line">              test(fsys, [lparen], <span class="number">23</span>)</span><br><span class="line">              <span class="comment">&#123;测试当前记号是否同步, 否则出错, 跳过一些记号&#125;</span></span><br><span class="line">              <span class="keyword">End</span> <span class="comment">&#123;while&#125;</span></span><br><span class="line">          <span class="keyword">End</span> <span class="comment">&#123;factor&#125;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">Begin</span> <span class="comment">&#123;term&#125;</span></span><br><span class="line">          factor(fsys+[times, slash]); <span class="comment">&#123;处理项中第一个因子&#125;</span></span><br><span class="line">          <span class="keyword">While</span> sym <span class="keyword">In</span> [times, slash] <span class="keyword">Do</span></span><br><span class="line">          <span class="comment">&#123;当前记号是“乘”或“除”号&#125;</span></span><br><span class="line">            <span class="keyword">Begin</span></span><br><span class="line">              mulop := sym; <span class="comment">&#123;运算符存入mulop&#125;</span></span><br><span class="line">              getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">              factor(fsys+[times, slash]); <span class="comment">&#123;处理一个因子&#125;</span></span><br><span class="line">              <span class="keyword">If</span> mulop = times <span class="keyword">Then</span> gen(opr, <span class="number">0</span>, <span class="number">4</span>)</span><br><span class="line">              <span class="comment">&#123;若mulop是“乘”号,生成一条乘法指令&#125;</span></span><br><span class="line">              <span class="keyword">Else</span> gen(opr, <span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">              <span class="comment">&#123;否则, mulop是除号, 生成一条除法指令&#125;</span></span><br><span class="line">            <span class="keyword">End</span></span><br><span class="line">        <span class="keyword">End</span> <span class="comment">&#123;term&#125;</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">Begin</span> <span class="comment">&#123;expression&#125;</span></span><br><span class="line">        <span class="keyword">If</span> sym <span class="keyword">In</span> [plus, minus] <span class="keyword">Then</span> <span class="comment">&#123;若第一个记号是加号或减号&#125;</span></span><br><span class="line">          <span class="keyword">Begin</span></span><br><span class="line">            addop := sym;  <span class="comment">&#123;“+”或“-”存入addop&#125;</span></span><br><span class="line">            getsym;</span><br><span class="line">            term(fsys+[plus, minus]); <span class="comment">&#123;处理一个项&#125;</span></span><br><span class="line">            <span class="keyword">If</span> addop = minus <span class="keyword">Then</span> gen(opr, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">            <span class="comment">&#123;若第一个项前是负号, 生成一条“负运算”指令&#125;</span></span><br><span class="line">          <span class="keyword">End</span></span><br><span class="line">        <span class="keyword">Else</span> term(fsys+[plus, minus]);</span><br><span class="line">        <span class="comment">&#123;第一个记号不是加号或减号, 则处理一个项&#125;</span></span><br><span class="line">        <span class="keyword">While</span> sym <span class="keyword">In</span> [plus, minus] <span class="keyword">Do</span> <span class="comment">&#123;若当前记号是加号或减号&#125;</span></span><br><span class="line">          <span class="keyword">Begin</span></span><br><span class="line">            addop := sym; <span class="comment">&#123;当前算符存入addop&#125;</span></span><br><span class="line">            getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">            term(fsys+[plus, minus]); <span class="comment">&#123;处理一个项&#125;</span></span><br><span class="line">            <span class="keyword">If</span> addop = plus <span class="keyword">Then</span> gen(opr, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">            <span class="comment">&#123;若addop是加号, 生成一条加法指令&#125;</span></span><br><span class="line">            <span class="keyword">Else</span> gen(opr, <span class="number">0</span>, <span class="number">3</span>)</span><br><span class="line">            <span class="comment">&#123;否则, addop是减号, 生成一条减法指令&#125;</span></span><br><span class="line">          <span class="keyword">End</span></span><br><span class="line">      <span class="keyword">End</span> <span class="comment">&#123;expression&#125;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">Procedure</span>  <span class="title">condition</span><span class="params">(fsys : symset)</span>;</span></span><br><span class="line">      <span class="keyword">Var</span>  relop : symbol;</span><br><span class="line">      <span class="keyword">Begin</span></span><br><span class="line">        <span class="keyword">If</span> sym = oddsym <span class="keyword">Then</span> <span class="comment">&#123;如果当前记号是“odd”&#125;</span></span><br><span class="line">          <span class="keyword">Begin</span></span><br><span class="line">            getsym;  <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">            expression(fsys); <span class="comment">&#123;处理算术表达式&#125;</span></span><br><span class="line">            gen(opr, <span class="number">0</span>, <span class="number">6</span>)</span><br><span class="line">            <span class="comment">&#123;生成指令,判定表达式的值是否为奇数,</span></span><br><span class="line"><span class="comment">            是,则取“真”;不是, 则取“假”&#125;</span></span><br><span class="line">          <span class="keyword">End</span></span><br><span class="line">        <span class="keyword">Else</span> <span class="comment">&#123;如果当前记号不是“odd”&#125;</span></span><br><span class="line">          <span class="keyword">Begin</span></span><br><span class="line">            expression([eql, neq, lss, gtr, leq, geq] + fsys);</span><br><span class="line">            <span class="comment">&#123;处理算术表达式&#125;</span></span><br><span class="line">            <span class="keyword">If</span> <span class="keyword">not</span> (sym <span class="keyword">In</span> [eql, neq, lss, leq, gtr, geq]) <span class="keyword">Then</span></span><br><span class="line">            <span class="comment">&#123;如果当前记号不是关系符, 则出错; 否则,做以下工作&#125;</span></span><br><span class="line">              error(<span class="number">20</span>)</span><br><span class="line">            <span class="keyword">Else</span></span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                relop := sym; <span class="comment">&#123;关系符存入relop&#125;</span></span><br><span class="line">                getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">                expression(fsys); <span class="comment">&#123;处理关系符右边的算术表达式&#125;</span></span><br><span class="line">                <span class="keyword">Case</span> relop <span class="keyword">Of</span> </span><br><span class="line">                  eql : gen(opr, <span class="number">0</span>, <span class="number">8</span>);</span><br><span class="line">                  <span class="comment">&#123;生成指令, 判定两个表达式的值是否相等&#125;</span></span><br><span class="line">                  neq : gen(opr, <span class="number">0</span>, <span class="number">9</span>);</span><br><span class="line">                  <span class="comment">&#123;生成指令, 判定两个表达式的值是否不等&#125;</span></span><br><span class="line">                  lss : gen(opr, <span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line">                  <span class="comment">&#123;生成指令,判定前一表达式是否小于后一表达式&#125;</span></span><br><span class="line">                  geq : gen(opr, <span class="number">0</span>, <span class="number">11</span>);</span><br><span class="line">                  <span class="comment">&#123;生成指令,判定前一表达式是否大于等于后一表达式&#125;</span></span><br><span class="line">                  gtr : gen(opr, <span class="number">0</span>, <span class="number">12</span>);</span><br><span class="line">                  <span class="comment">&#123;生成指令,判定前一表达式是否大于后一表达式&#125;</span></span><br><span class="line">                  leq : gen(opr, <span class="number">0</span>, <span class="number">13</span>);</span><br><span class="line">                  <span class="comment">&#123;生成指令,判定前一表达式是否小于等于后一表达式&#125;</span></span><br><span class="line">                <span class="keyword">End</span></span><br><span class="line">              <span class="keyword">End</span></span><br><span class="line">            <span class="keyword">End</span></span><br><span class="line">        <span class="keyword">End</span> <span class="comment">&#123;condition&#125;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">Begin</span> <span class="comment">&#123;statement&#125;</span></span><br><span class="line">      <span class="keyword">If</span> sym = ident <span class="keyword">Then</span> <span class="comment">&#123;处理赋值语句&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          i := position(id);</span><br><span class="line">          <span class="comment">&#123;在符号表中查id, 返回id在符号表中的入口&#125;</span></span><br><span class="line">          <span class="keyword">If</span> i = <span class="number">0</span> <span class="keyword">Then</span> error(<span class="number">11</span>)</span><br><span class="line">          <span class="comment">&#123;若在符号表中查不到id, 则出错, 否则做以下工作&#125;</span></span><br><span class="line">          <span class="keyword">Else</span> <span class="keyword">If</span> table[i].kind &lt;&gt; variable <span class="keyword">Then</span></span><br><span class="line">            <span class="comment">&#123;若标识符id不是变量, 则出错&#125;</span></span><br><span class="line">            <span class="keyword">Begin</span> <span class="comment">&#123;对非变量赋值&#125;</span></span><br><span class="line">              error(<span class="number">12</span>);</span><br><span class="line">              i := <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">End</span>;</span><br><span class="line">          getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">          <span class="keyword">If</span> sym = becomes <span class="keyword">Then</span> getsym</span><br><span class="line">          <span class="keyword">Else</span> error(<span class="number">13</span>);</span><br><span class="line">          <span class="comment">&#123;若当前是赋值号, 取下一记号, 否则出错&#125;</span></span><br><span class="line">          expression(fsys); <span class="comment">&#123;处理表达式&#125;</span></span><br><span class="line">          <span class="keyword">If</span> i &lt;&gt; <span class="number">0</span> <span class="keyword">Then</span> <span class="comment">&#123;若赋值号左边的变量id有定义&#125;</span></span><br><span class="line">            <span class="keyword">With</span> table[i] <span class="keyword">Do</span> gen(sto, lev-level, adr)</span><br><span class="line">            <span class="comment">&#123;生成一条存数指令, 将栈顶(表达式)的值存入变量id中;</span></span><br><span class="line"><span class="comment">              lev: 当前语句所在过程的层号;</span></span><br><span class="line"><span class="comment">              level: 定义变量id的过程的层号;</span></span><br><span class="line"><span class="comment">              adr: 变量id在其过程的数据空间的相对地址&#125;</span></span><br><span class="line">        <span class="keyword">End</span></span><br><span class="line">          </span><br><span class="line">      <span class="keyword">Else</span> <span class="keyword">If</span> sym = callsym <span class="keyword">Then</span> <span class="comment">&#123;处理过程调用语句&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">          <span class="keyword">If</span> sym &lt;&gt; ident <span class="keyword">Then</span> error(<span class="number">14</span>)</span><br><span class="line">          <span class="keyword">Else</span></span><br><span class="line">          <span class="comment">&#123;如果下一记号不是标识符(过程名),则出错,</span></span><br><span class="line"><span class="comment">            否则做以下工作&#125;</span></span><br><span class="line">            <span class="keyword">Begin</span></span><br><span class="line">              i := position(id); <span class="comment">&#123;查符号表,返回id在表中的位置&#125;</span></span><br><span class="line">              <span class="keyword">If</span> i = <span class="number">0</span> <span class="keyword">Then</span> error(<span class="number">11</span>)</span><br><span class="line">              <span class="keyword">Else</span></span><br><span class="line">                <span class="comment">&#123;如果在符号表中查不到, 则出错; 否则,做以下工作&#125;</span></span><br><span class="line">                <span class="keyword">With</span> table[i] <span class="keyword">Do</span></span><br><span class="line">                  <span class="keyword">If</span> kind = Procedure2 <span class="keyword">Then</span></span><br><span class="line">                    <span class="comment">&#123;如果在符号表中id是过程名&#125;</span></span><br><span class="line">                    gen(cal, lev-level, adr)</span><br><span class="line">                    <span class="comment">&#123;生成一条过程调用指令;</span></span><br><span class="line"><span class="comment">                      lev: 当前语句所在过程的层号</span></span><br><span class="line"><span class="comment">                      level: 定义过程名id的层号;</span></span><br><span class="line"><span class="comment">                      adr: 过程id的代码中第一条指令的地址&#125;</span></span><br><span class="line">                  <span class="keyword">Else</span> error(<span class="number">15</span>); <span class="comment">&#123;若id不是过程名,则出错&#125;</span></span><br><span class="line">              getsym <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">            <span class="keyword">End</span></span><br><span class="line">        <span class="keyword">End</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">Else</span> <span class="keyword">If</span> sym = ifsym <span class="keyword">Then</span> <span class="comment">&#123;处理条件语句&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">          condition([thensym, dosym]+fsys); <span class="comment">&#123;处理条件表达式&#125;</span></span><br><span class="line">          <span class="keyword">If</span> sym = thensym <span class="keyword">Then</span> getsym</span><br><span class="line">          <span class="keyword">Else</span> error(<span class="number">16</span>);</span><br><span class="line">          <span class="comment">&#123;如果当前记号是“then”,则取下一记号; 否则出错&#125;</span></span><br><span class="line">          cx1 := cx; <span class="comment">&#123;cx1记录下一代码的地址&#125;</span></span><br><span class="line">          gen(jpc, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">          <span class="comment">&#123;生成指令,表达式为“假”转到某地址(待填),</span></span><br><span class="line"><span class="comment">          否则顺序执行&#125;</span></span><br><span class="line">          statement(fsys); <span class="comment">&#123;处理一个语句&#125;</span></span><br><span class="line">          code[cx1].a := cx</span><br><span class="line">          <span class="comment">&#123;将下一个指令的地址回填到上面的jpc指令地址栏&#125;</span></span><br><span class="line">        <span class="keyword">End</span></span><br><span class="line">      </span><br><span class="line">      <span class="keyword">Else</span> <span class="keyword">If</span> sym = beginsym <span class="keyword">Then</span> <span class="comment">&#123;处理语句序列&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          getsym;</span><br><span class="line">          statement([semicolon, endsym]+fsys);</span><br><span class="line">          <span class="comment">&#123;取下一记号, 处理第一个语句&#125;</span></span><br><span class="line">          <span class="keyword">While</span> sym <span class="keyword">In</span> [semicolon]+statbegsys <span class="keyword">Do</span></span><br><span class="line">          <span class="comment">&#123;如果当前记号是分号或语句的开始符号,则做以下工作&#125;</span></span><br><span class="line">            <span class="keyword">Begin</span></span><br><span class="line">              <span class="keyword">If</span> sym = semicolon <span class="keyword">Then</span> getsym</span><br><span class="line">              <span class="keyword">Else</span> error(<span class="number">10</span>);</span><br><span class="line">              <span class="comment">&#123;如果当前记号是分号,则取下一记号, 否则出错&#125;</span></span><br><span class="line">              statement([semicolon, endsym]+fsys) <span class="comment">&#123;处理下一个语句&#125;</span></span><br><span class="line">            <span class="keyword">End</span>;</span><br><span class="line">          <span class="keyword">If</span> sym = endsym <span class="keyword">Then</span> getsym</span><br><span class="line">          <span class="keyword">Else</span> error(<span class="number">17</span>)</span><br><span class="line">          <span class="comment">&#123;如果当前记号是“end”,则取下一记号,否则出错&#125;</span></span><br><span class="line">        <span class="keyword">End</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">Else</span> <span class="keyword">If</span> sym = whilesym <span class="keyword">Then</span> <span class="comment">&#123;处理循环语句&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          cx1 := cx; <span class="comment">&#123;cx1记录下一指令地址,即条件表达式的</span></span><br><span class="line"><span class="comment">                      第一条代码的地址&#125;</span></span><br><span class="line">          getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">          condition([dosym]+fsys); <span class="comment">&#123;处理条件表达式&#125;</span></span><br><span class="line">          cx2 := cx; <span class="comment">&#123;记录下一指令的地址&#125;</span></span><br><span class="line">          gen(jpc, <span class="number">0</span>, <span class="number">0</span>); <span class="comment">&#123;生成一条指令,表达式为“假”转到某地</span></span><br><span class="line"><span class="comment">                            址(待回填), 否则顺序执行&#125;</span></span><br><span class="line">          <span class="keyword">If</span> sym = dosym <span class="keyword">Then</span> getsym</span><br><span class="line">          <span class="keyword">Else</span> error(<span class="number">18</span>);</span><br><span class="line">          <span class="comment">&#123;如果当前记号是“do”,则取下一记号, 否则出错&#125;</span></span><br><span class="line">          statement(fsys); <span class="comment">&#123;处理“do”后面的语句&#125;</span></span><br><span class="line">          gen(jmp, <span class="number">0</span>, cx1); <span class="comment">&#123;生成无条件转移指令, 转移到“while”后的</span></span><br><span class="line"><span class="comment">                              条件表达式的代码的第一条指令处&#125;</span></span><br><span class="line">          code[cx2].a := cx</span><br><span class="line">          <span class="comment">&#123;把下一指令地址回填到前面生成的jpc指令的地址栏&#125;</span></span><br><span class="line">        <span class="keyword">End</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&#123;###################### read语句 ######################&#125;</span></span><br><span class="line">      <span class="keyword">Else</span> <span class="keyword">If</span> sym = readsym <span class="keyword">Then</span> <span class="comment">&#123;处理read语句&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">          <span class="keyword">If</span> sym = lparen <span class="keyword">Then</span> <span class="comment">&#123;如果read后跟的是左括号&#125;</span></span><br><span class="line">            <span class="keyword">Repeat</span></span><br><span class="line">              getsym;</span><br><span class="line">              <span class="keyword">If</span> sym = ident <span class="keyword">Then</span></span><br><span class="line">                <span class="keyword">Begin</span></span><br><span class="line">                  i := position(id);</span><br><span class="line">                  <span class="comment">&#123;在符号表中查id, 返回id在符号表中的入口&#125;</span></span><br><span class="line">                  <span class="keyword">If</span> i = <span class="number">0</span> <span class="keyword">Then</span> error(<span class="number">11</span>)</span><br><span class="line">                  <span class="comment">&#123;若在符号表中查不到id, 则出错, 否则做以下工作&#125;</span></span><br><span class="line">                  <span class="keyword">Else</span> <span class="keyword">If</span> table[i].kind &lt;&gt; variable <span class="keyword">Then</span></span><br><span class="line">                    <span class="comment">&#123;若标识符id不是变量, 则出错&#125;</span></span><br><span class="line">                    <span class="keyword">Begin</span> <span class="comment">&#123;对非变量赋值&#125;</span></span><br><span class="line">                      error(<span class="number">12</span>);</span><br><span class="line">                      i := <span class="number">0</span>;</span><br><span class="line">                    <span class="keyword">End</span></span><br><span class="line">                  <span class="keyword">Else</span> <span class="keyword">With</span> table[i] <span class="keyword">Do</span> gen(red, lev-level, adr)</span><br><span class="line">                    <span class="comment">&#123;生成一条RED指令;</span></span><br><span class="line"><span class="comment">                      lev: 当前语句所在过程的层号;</span></span><br><span class="line"><span class="comment">                      level: 定义变量id的过程的层号;</span></span><br><span class="line"><span class="comment">                      adr: 变量id在其过程的数据空间的相对地址&#125;</span></span><br><span class="line">                <span class="keyword">End</span></span><br><span class="line">              <span class="keyword">Else</span> error(<span class="number">4</span>); <span class="comment">&#123;如果变量说明未出现标识符,则出错&#125;</span></span><br><span class="line">              getsym;</span><br><span class="line">            <span class="keyword">Until</span> sym &lt;&gt; comma <span class="comment">&#123;直到当前记号不是逗号&#125;</span></span><br><span class="line">          <span class="keyword">Else</span> error(<span class="number">40</span>); <span class="comment">&#123;如果read后跟的不是左括号,出错&#125;</span></span><br><span class="line">          <span class="keyword">If</span> sym &lt;&gt; rparen <span class="keyword">Then</span> error(<span class="number">22</span>); <span class="comment">&#123;漏右括号,出错&#125;</span></span><br><span class="line">          getsym</span><br><span class="line">        <span class="keyword">End</span> <span class="comment">&#123;处理read语句&#125;</span>   </span><br><span class="line"></span><br><span class="line">      <span class="comment">&#123;###################### write语句 ######################&#125;</span></span><br><span class="line">      <span class="keyword">Else</span> <span class="keyword">if</span> sym = writesym <span class="keyword">Then</span> <span class="comment">&#123;处理write语句&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">          <span class="keyword">If</span> sym = lparen <span class="keyword">Then</span> <span class="comment">&#123;如果write后跟的是左括号&#125;</span></span><br><span class="line">            <span class="keyword">Begin</span></span><br><span class="line">              <span class="keyword">Repeat</span></span><br><span class="line">                getsym;</span><br><span class="line">                expression([rparen,comma]+fsys);</span><br><span class="line">                gen(wrt, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">              <span class="keyword">Until</span> sym &lt;&gt; comma; <span class="comment">&#123;直到当前记号不是逗号&#125;</span></span><br><span class="line">              <span class="keyword">If</span> sym &lt;&gt; rparen <span class="keyword">Then</span> error(<span class="number">22</span>); <span class="comment">&#123;漏右括号,出错&#125;</span></span><br><span class="line">              getsym</span><br><span class="line">            <span class="keyword">End</span></span><br><span class="line">          <span class="keyword">Else</span> error(<span class="number">40</span>) <span class="comment">&#123;如果write后跟的不是左括号,出错&#125;</span></span><br><span class="line">        <span class="keyword">End</span>; <span class="comment">&#123;处理write语句&#125;</span></span><br><span class="line">            </span><br><span class="line">      test(fsys, [ ], <span class="number">19</span>)</span><br><span class="line">      <span class="comment">&#123;测试下一记号是否正常, 否则出错, 跳过一些记号&#125;</span></span><br><span class="line">    <span class="keyword">End</span> <span class="comment">&#123;statement&#125;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">Begin</span> <span class="comment">&#123;block&#125;</span></span><br><span class="line">    dx := <span class="number">3</span>; <span class="comment">&#123;本过程数据空间栈顶指针&#125;</span></span><br><span class="line">    tx0 := tx; <span class="comment">&#123;标识符表的长度(当前指针)&#125;</span></span><br><span class="line">    table[tx].adr := cx; <span class="comment">&#123;本过程名的地址, 即下一条指令的序号&#125;</span></span><br><span class="line">    gen(jmp, <span class="number">0</span>, <span class="number">0</span>); <span class="comment">&#123;生成一条转移指令&#125;</span></span><br><span class="line">    <span class="keyword">If</span> lev &gt; levmax <span class="keyword">Then</span> error(<span class="number">32</span>);</span><br><span class="line">    <span class="comment">&#123;如果当前过程层号&gt;最大层数, 则出错&#125;</span></span><br><span class="line">    <span class="keyword">Repeat</span></span><br><span class="line">      <span class="keyword">If</span> sym = constsym <span class="keyword">Then</span> <span class="comment">&#123;处理常数说明语句&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          getsym;</span><br><span class="line">          <span class="keyword">Repeat</span></span><br><span class="line">            constdeclaration; <span class="comment">&#123;处理一个常数说明&#125;</span></span><br><span class="line">            <span class="keyword">While</span> sym = comma <span class="keyword">Do</span> <span class="comment">&#123;如果当前记号是逗号&#125;</span></span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                getsym;</span><br><span class="line">                constdeclaration</span><br><span class="line">              <span class="keyword">End</span>; <span class="comment">&#123;处理下一个常数说明&#125;</span></span><br><span class="line">            <span class="keyword">If</span> sym = semicolon <span class="keyword">Then</span> getsym</span><br><span class="line">            <span class="keyword">Else</span> error(<span class="number">5</span>)</span><br><span class="line">            <span class="comment">&#123;如果当前记号是分号,则常数说明已处理完, 否则出错&#125;</span></span><br><span class="line">          <span class="keyword">Until</span> sym &lt;&gt; ident</span><br><span class="line">          <span class="comment">&#123;跳过一些记号, 直到当前记号不是标识符(出错时才用到)&#125;</span></span><br><span class="line">        <span class="keyword">End</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">If</span> sym = varsym <span class="keyword">Then</span> <span class="comment">&#123;当前记号是变量说明语句开始符号&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          getsym;</span><br><span class="line">          <span class="keyword">Repeat</span></span><br><span class="line">            vardeclaration; <span class="comment">&#123;处理一个变量说明&#125;</span></span><br><span class="line">            <span class="keyword">While</span> sym = comma <span class="keyword">Do</span> <span class="comment">&#123;如果当前记号是逗号&#125;</span></span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                getsym;</span><br><span class="line">                vardeclaration</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">            <span class="comment">&#123;处理下一个变量说明&#125;</span></span><br><span class="line">            <span class="keyword">If</span> sym = semicolon <span class="keyword">Then</span> getsym</span><br><span class="line">            <span class="keyword">Else</span> error(<span class="number">5</span>)</span><br><span class="line">            <span class="comment">&#123;如果当前记号是分号,则变量说明已处理完, 否则出错&#125;</span></span><br><span class="line">          <span class="keyword">Until</span> sym &lt;&gt; ident;</span><br><span class="line">          <span class="comment">&#123;跳过一些记号, 直到当前记号不是标识符(出错时才用到)&#125;</span></span><br><span class="line">        <span class="keyword">End</span>;</span><br><span class="line">      <span class="keyword">While</span> sym = procsym <span class="keyword">Do</span> <span class="comment">&#123;处理过程说明&#125;</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          getsym;</span><br><span class="line">          <span class="keyword">If</span> sym = ident <span class="keyword">Then</span> <span class="comment">&#123;如果当前记号是过程名&#125;</span></span><br><span class="line">            <span class="keyword">Begin</span></span><br><span class="line">              enter(Procedure2);</span><br><span class="line">              getsym</span><br><span class="line">            <span class="keyword">End</span></span><br><span class="line">          <span class="comment">&#123;把过程名填入符号表&#125;</span></span><br><span class="line">          <span class="keyword">Else</span> error(<span class="number">4</span>); <span class="comment">&#123;否则, 缺少过程名出错&#125;</span></span><br><span class="line">          <span class="keyword">If</span> sym = semicolon <span class="keyword">Then</span> getsym</span><br><span class="line">          <span class="keyword">Else</span> error(<span class="number">5</span>);</span><br><span class="line">          <span class="comment">&#123;当前记号是分号, 则取下一记号,否则,过程名后漏掉分号出错&#125;</span></span><br><span class="line">          block(lev+<span class="number">1</span>, tx, [semicolon]+fsys); <span class="comment">&#123;处理过程体&#125;</span></span><br><span class="line">          <span class="comment">&#123;lev+1: 过程嵌套层数加1; tx: 符号表当前栈顶指针,</span></span><br><span class="line"><span class="comment">            也是新过程符号表起始位置; [semicolon]+fsys: 过程体开始和末尾符号集&#125;</span></span><br><span class="line">          <span class="keyword">If</span> sym = semicolon <span class="keyword">Then</span> <span class="comment">&#123;如果当前记号是分号&#125;</span></span><br><span class="line">            <span class="keyword">Begin</span></span><br><span class="line">              getsym; <span class="comment">&#123;取下一记号&#125;</span></span><br><span class="line">              test(statbegsys+[ident, procsym], fsys, <span class="number">6</span>)</span><br><span class="line">              <span class="comment">&#123;测试当前记号是否语句开始符号或过程说明开始符号,</span></span><br><span class="line"><span class="comment">                否则报告错误6, 并跳过一些记号&#125;</span></span><br><span class="line">            <span class="keyword">End</span></span><br><span class="line">          <span class="keyword">Else</span> error(<span class="number">5</span>) <span class="comment">&#123;如果当前记号不是分号,则出错&#125;</span></span><br><span class="line">        <span class="keyword">End</span>; <span class="comment">&#123;while&#125;</span></span><br><span class="line">      test(statbegsys+[ident], declbegsys, <span class="number">7</span>)</span><br><span class="line">      <span class="comment">&#123;检测当前记号是否语句开始符号, 否则出错, 并跳过一些记号&#125;</span></span><br><span class="line">    <span class="keyword">Until</span> <span class="keyword">not</span> (sym <span class="keyword">In</span> declbegsys);</span><br><span class="line">    <span class="comment">&#123;回到说明语句的处理(出错时才用),直到当前记号不是说明语句的开始符号&#125;</span></span><br><span class="line">    code[table[tx0].adr].a := cx;</span><br><span class="line">    <span class="comment">&#123;table[tx0].adr是本过程名的第1条</span></span><br><span class="line"><span class="comment">      代码(jmp, 0, 0)的地址,本语句即是将下一代码(本过程语句的第</span></span><br><span class="line"><span class="comment">      1条代码)的地址回填到该jmp指令中,得(jmp, 0, cx)&#125;</span></span><br><span class="line">    <span class="keyword">With</span> table[tx0] <span class="keyword">Do</span> <span class="comment">&#123;本过程名的第1条代码的地址改为下一指令地址cx&#125;</span></span><br><span class="line">      <span class="keyword">Begin</span></span><br><span class="line">        adr := cx; <span class="comment">&#123;代码开始地址&#125;</span></span><br><span class="line">      <span class="keyword">End</span>;</span><br><span class="line">    cx0 := cx; <span class="comment">&#123;cx0记录起始代码地址&#125;</span></span><br><span class="line">    gen(int, <span class="number">0</span>, dx); <span class="comment">&#123;生成一条指令, 在栈顶为本过程留出数据空间&#125;</span></span><br><span class="line">    statement([semicolon, endsym]+fsys); <span class="comment">&#123;处理一个语句&#125;</span></span><br><span class="line">    gen(opr, <span class="number">0</span>, <span class="number">0</span>); <span class="comment">&#123;生成返回指令&#125;</span></span><br><span class="line">    test(fsys, [ ], <span class="number">8</span>); <span class="comment">&#123;测试过程体语句后的符号是否正常,否则出错&#125;</span></span><br><span class="line">    listcode; <span class="comment">&#123;打印本过程的中间代码序列&#125;</span></span><br><span class="line">  <span class="keyword">End</span>  <span class="comment">&#123;block&#125;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">Procedure</span>  <span class="title">interpret</span>;</span></span><br><span class="line">  <span class="keyword">Const</span> stacksize = <span class="number">500</span>; <span class="comment">&#123;运行时数据空间(栈)的上界&#125;</span></span><br><span class="line">  <span class="keyword">Var</span> p, b, t : integer; <span class="comment">&#123;程序地址寄存器, 基地址寄存器,栈顶地址寄存器&#125;</span></span><br><span class="line">      i : instruction; <span class="comment">&#123;指令寄存器&#125;</span></span><br><span class="line">      s : <span class="keyword">array</span> [<span class="number">1</span>..stacksize] <span class="keyword">Of</span> integer; <span class="comment">&#123;数据存储栈&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">Function</span>  <span class="title">base</span><span class="params">(l : integer)</span> :</span> integer;</span><br><span class="line">    <span class="keyword">Var</span>  b1 : integer;</span><br><span class="line">    <span class="keyword">Begin</span></span><br><span class="line">      b1 := b; <span class="comment">&#123;顺静态链求层差为l的外层的基地址&#125;</span></span><br><span class="line">      <span class="keyword">While</span> l &gt; <span class="number">0</span> <span class="keyword">Do</span></span><br><span class="line">        <span class="keyword">Begin</span></span><br><span class="line">          b1 := s[b1];</span><br><span class="line">          l := l-<span class="number">1</span></span><br><span class="line">        <span class="keyword">End</span>;</span><br><span class="line">      base := b1</span><br><span class="line">    <span class="keyword">End</span> <span class="comment">&#123;base&#125;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">Begin</span></span><br><span class="line">    writeln(<span class="string">'START PL/0'</span>);</span><br><span class="line">    writeln(fout, <span class="string">'START PL/0'</span>);</span><br><span class="line">    t := <span class="number">0</span>; <span class="comment">&#123;栈顶地址寄存器&#125;</span></span><br><span class="line">    b := <span class="number">1</span>; <span class="comment">&#123;基地址寄存器&#125;</span></span><br><span class="line">    p := <span class="number">0</span>; <span class="comment">&#123;程序地址寄存器&#125;</span></span><br><span class="line">    s[<span class="number">1</span>] := <span class="number">0</span>;</span><br><span class="line">    s[<span class="number">2</span>] := <span class="number">0</span>;</span><br><span class="line">    s[<span class="number">3</span>] := <span class="number">0</span>;</span><br><span class="line">    <span class="comment">&#123;最外层主程序数据空间栈最下面预留三个单元&#125;</span></span><br><span class="line">    <span class="comment">&#123;每个过程运行时的数据空间的前三个单元是:SL, DL, RA;</span></span><br><span class="line"><span class="comment">    SL: 指向本过程静态直接外层过程的SL单元;</span></span><br><span class="line"><span class="comment">    DL: 指向调用本过程的过程的最新数据空间的第一个单元;</span></span><br><span class="line"><span class="comment">    RA: 返回地址 &#125;</span></span><br><span class="line">    <span class="keyword">Repeat</span></span><br><span class="line">      i := code[p]; <span class="comment">&#123;i取程序地址寄存器p指示的当前指令&#125;</span></span><br><span class="line">      p := p+<span class="number">1</span>; <span class="comment">&#123;程序地址寄存器p加1,指向下一条指令&#125;</span></span><br><span class="line">      <span class="keyword">With</span> i <span class="keyword">Do</span></span><br><span class="line">        <span class="keyword">Case</span> f <span class="keyword">Of</span> </span><br><span class="line">          lit :</span><br><span class="line">            <span class="keyword">Begin</span> <span class="comment">&#123;当前指令是取常数指令(lit, 0, a)&#125;</span></span><br><span class="line">              t := t+<span class="number">1</span>;</span><br><span class="line">              s[t] := a</span><br><span class="line">            <span class="keyword">End</span>;</span><br><span class="line">            <span class="comment">&#123;栈顶指针加1, 把常数a取到栈顶&#125;</span></span><br><span class="line">          opr : <span class="keyword">Case</span> a <span class="keyword">Of</span> <span class="comment">&#123;当前指令是运算指令(opr, 0, a)&#125;</span></span><br><span class="line">            <span class="number">0</span> :</span><br><span class="line">              <span class="keyword">Begin</span> <span class="comment">&#123;a=0时,是返回调用过程指令&#125;</span></span><br><span class="line">                t := b-<span class="number">1</span>; <span class="comment">&#123;恢复调用过程栈顶&#125;</span></span><br><span class="line">                p := s[t+<span class="number">3</span>]; <span class="comment">&#123;程序地址寄存器p取返回地址&#125;</span></span><br><span class="line">                b := s[t+<span class="number">2</span>]; <span class="comment">&#123;基地址寄存器b指向调用过程的基地址&#125;</span></span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">            <span class="number">1</span> : s[t] := -s[t]; <span class="comment">&#123;一元负运算, 栈顶元素的值反号&#125;</span></span><br><span class="line">            <span class="number">2</span> :</span><br><span class="line">              <span class="keyword">Begin</span> <span class="comment">&#123;加法&#125;</span></span><br><span class="line">                t := t-<span class="number">1</span>;</span><br><span class="line">                s[t] := s[t] + s[t+<span class="number">1</span>]</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">            <span class="number">3</span> :</span><br><span class="line">              <span class="keyword">Begin</span> <span class="comment">&#123;减法&#125;</span></span><br><span class="line">                t := t-<span class="number">1</span>;</span><br><span class="line">                s[t] := s[t]-s[t+<span class="number">1</span>]</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">            <span class="number">4</span> :</span><br><span class="line">              <span class="keyword">Begin</span> <span class="comment">&#123;乘法&#125;</span></span><br><span class="line">                t := t-<span class="number">1</span>;</span><br><span class="line">                s[t] := s[t] * s[t+<span class="number">1</span>]</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">            <span class="number">5</span> :</span><br><span class="line">              <span class="keyword">Begin</span> <span class="comment">&#123;整数除法&#125;</span></span><br><span class="line">                t := t-<span class="number">1</span>;</span><br><span class="line">                s[t] := s[t] <span class="keyword">Div</span> s[t+<span class="number">1</span>]</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">            <span class="number">6</span> : s[t] := ord(odd(s[t])); </span><br><span class="line">              <span class="comment">&#123;算s[t]是否奇数, 是则s[t]=1, 否则s[t]=0&#125;</span></span><br><span class="line">            <span class="number">8</span> :</span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                t := t-<span class="number">1</span>;</span><br><span class="line">                s[t] := ord(s[t] = s[t+<span class="number">1</span>])</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">              <span class="comment">&#123;判两个表达式的值是否相等,是则s[t]=1,否则s[t]=0&#125;</span></span><br><span class="line">            <span class="number">9</span>:</span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                t := t-<span class="number">1</span>;</span><br><span class="line">                s[t] := ord(s[t] &lt;&gt; s[t+<span class="number">1</span>])</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">              <span class="comment">&#123;判两个表达式的值是否不等,是则s[t]=1,否则s[t]=0&#125;</span></span><br><span class="line">            <span class="number">10</span> :</span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                t := t-<span class="number">1</span>;</span><br><span class="line">                s[t] := ord(s[t] &lt; s[t+<span class="number">1</span>])</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">              <span class="comment">&#123;判前一表达式是否小于后一表达式,是则s[t]=1,否则s[t]=0&#125;</span></span><br><span class="line">            <span class="number">11</span>:</span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                t := t-<span class="number">1</span>;</span><br><span class="line">                s[t] := ord(s[t] &gt;= s[t+<span class="number">1</span>])</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">              <span class="comment">&#123;判前一表达式是否大于或等于后一表达式,是则s[t]=1,否则s[t]=0&#125;</span></span><br><span class="line">            <span class="number">12</span> :</span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                t := t-<span class="number">1</span>;</span><br><span class="line">                s[t] := ord(s[t] &gt; s[t+<span class="number">1</span>])</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">              <span class="comment">&#123;判前一表达式是否大于后一表达式,是则s[t]=1,否则s[t]=0&#125;</span></span><br><span class="line">            <span class="number">13</span> :</span><br><span class="line">              <span class="keyword">Begin</span></span><br><span class="line">                t := t-<span class="number">1</span>;</span><br><span class="line">                s[t] := ord(s[t] &lt;= s[t+<span class="number">1</span>])</span><br><span class="line">              <span class="keyword">End</span>;</span><br><span class="line">              <span class="comment">&#123;判前一表达式是否小于或等于后一表达式,是则s[t]=1,否则s[t]=0&#125;</span></span><br><span class="line">            <span class="keyword">End</span>;</span><br><span class="line">          lod :</span><br><span class="line">            <span class="keyword">Begin</span> <span class="comment">&#123;当前指令是取变量指令(lod, l, a)&#125;</span></span><br><span class="line">              t := t + <span class="number">1</span>;</span><br><span class="line">              s[t] := s[base(l) + a]</span><br><span class="line">              <span class="comment">&#123;栈顶指针加1, 根据静态链SL,将层差为l,</span></span><br><span class="line"><span class="comment">                相对地址为a的变量值取到栈顶&#125;</span></span><br><span class="line">            <span class="keyword">End</span>;</span><br><span class="line">          sto :</span><br><span class="line">            <span class="keyword">Begin</span> <span class="comment">&#123;当前指令是保存变量值(sto, l, a)指令&#125;</span></span><br><span class="line">              s[base(l) + a] := s[t];</span><br><span class="line">              writeln(s[t]);</span><br><span class="line">              writeln(fout, s[t]);</span><br><span class="line">              <span class="comment">&#123;根据静态链SL,将栈顶的值存入层差为l,</span></span><br><span class="line"><span class="comment">                相对地址为a的变量中&#125;</span></span><br><span class="line">              t := t-<span class="number">1</span> <span class="comment">&#123;栈顶指针减1&#125;</span></span><br><span class="line">            <span class="keyword">End</span>;</span><br><span class="line">          cal :</span><br><span class="line">            <span class="keyword">Begin</span> <span class="comment">&#123;当前指令是(cal, l, a)&#125;</span></span><br><span class="line">              <span class="comment">&#123;为被调用过程数据空间建立连接数据&#125;</span></span><br><span class="line">              s[t+<span class="number">1</span>] := base( l );</span><br><span class="line">              <span class="comment">&#123;根据层差l找到本过程的静态直接外层过程的数据空间的SL单元,</span></span><br><span class="line"><span class="comment">                将其地址存入本过程新的数据空间的SL单元&#125;</span></span><br><span class="line">              s[t+<span class="number">2</span>] := b; <span class="comment">&#123;调用过程的数据空间的起始地址存入本过程DL单元&#125;</span></span><br><span class="line">              s[t+<span class="number">3</span>] := p; <span class="comment">&#123;调用过程cal指令的下一条的地址存入本过程RA单元&#125;</span></span><br><span class="line">              b := t+<span class="number">1</span>; <span class="comment">&#123;b指向被调用过程新的数据空间起始地址&#125;</span></span><br><span class="line">              p := a <span class="comment">&#123;指令地址寄存储器指向被调用过程的地址a&#125;</span></span><br><span class="line">            <span class="keyword">End</span>;</span><br><span class="line">          int : t := t + a;</span><br><span class="line">            <span class="comment">&#123;若当前指令是(int, 0, a), 则数据空间栈顶留出a大小的空间&#125;</span></span><br><span class="line">          jmp : p := a;</span><br><span class="line">            <span class="comment">&#123;若当前指令是(jmp, 0, a), 则程序转到地址a执行&#125;</span></span><br><span class="line">          jpc :</span><br><span class="line">            <span class="keyword">Begin</span> <span class="comment">&#123;当前指令是(jpc, 0, a)&#125;</span></span><br><span class="line">              <span class="keyword">If</span> s[t] = <span class="number">0</span> <span class="keyword">Then</span> p := a;</span><br><span class="line">              <span class="comment">&#123;如果当前运算结果为“假”(0),程序转到地址a执行,否则顺序执行&#125;</span></span><br><span class="line">              t := t-<span class="number">1</span> <span class="comment">&#123;数据栈顶指针减1&#125;</span></span><br><span class="line">            <span class="keyword">End</span>;</span><br><span class="line"></span><br><span class="line">          red :</span><br><span class="line">            <span class="keyword">Begin</span> <span class="comment">&#123;当前指令是red&#125;</span></span><br><span class="line">              writeln(<span class="string">'Input an integer: '</span>);</span><br><span class="line">              readln(s[base(l)+a]); <span class="comment">&#123;读一行数据,读入到层差为l,相对地址为a的变量值&#125;</span></span><br><span class="line">              writeln(<span class="string">'Input: '</span>, s[base(l)+a]);</span><br><span class="line">              writeln(fout, <span class="string">'Input: '</span>, s[base(l)+a]);</span><br><span class="line">            <span class="keyword">End</span>;</span><br><span class="line">          wrt :</span><br><span class="line">            <span class="keyword">Begin</span> <span class="comment">&#123;当前指令是wrt&#125;</span></span><br><span class="line">              writeln(<span class="string">'Output: '</span>, s[t]);</span><br><span class="line">              writeln(fout, <span class="string">'Output: '</span>, s[t]);</span><br><span class="line">              t := t+<span class="number">1</span> <span class="comment">&#123;数据栈顶指针加1&#125;</span></span><br><span class="line">            <span class="keyword">End</span></span><br><span class="line">        <span class="keyword">End</span> <span class="comment">&#123;with, case&#125;</span></span><br><span class="line">    <span class="keyword">Until</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">&#123;程序一直执行到p取最外层主程序的返回地址0时为止&#125;</span></span><br><span class="line">    <span class="keyword">write</span>(<span class="string">'End PL/0'</span>);</span><br><span class="line">    <span class="keyword">write</span>(fout, <span class="string">'End PL/0'</span>);</span><br><span class="line">  <span class="keyword">End</span> <span class="comment">&#123;interpret&#125;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">Begin</span>  <span class="comment">&#123;主程序&#125;</span></span><br><span class="line">  writeln(<span class="string">'Input PL0 src file name: '</span>);</span><br><span class="line">  readln(srcfile);</span><br><span class="line">  assign(fin, srcfile); <span class="comment">&#123;将文件名字符串str赋给文件变量fin,</span></span><br><span class="line"><span class="comment">                        程序对文件变量fin的操作代替对文件str的操作&#125;</span></span><br><span class="line">  reset(fin); <span class="comment">&#123;打开文件&#125;</span></span><br><span class="line"></span><br><span class="line">  writeln(<span class="string">'Input dst file name: '</span>);</span><br><span class="line">  readln(dstfile);</span><br><span class="line">  assign(fout, dstfile);</span><br><span class="line">  rewrite(fout); <span class="comment">&#123;新建文件(如果文件已经存在则冲掉)&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">For</span> ch := <span class="string">'a'</span> <span class="keyword">To</span> <span class="string">';'</span> <span class="keyword">Do</span> ssym[ch] := nul;</span><br><span class="line">  <span class="comment">&#123;ASCII码的顺序&#125;</span></span><br><span class="line">  <span class="comment">&#123;注意前面(二分查找)找关键字是按ASCII码顺序来找的,</span></span><br><span class="line"><span class="comment">   所以下面的关键字必须是ASCII码的顺序&#125;</span></span><br><span class="line">  word[<span class="number">1</span>] := <span class="string">'begin     '</span>;</span><br><span class="line">  word[<span class="number">2</span>] := <span class="string">'call      '</span>;</span><br><span class="line">  word[<span class="number">3</span>] := <span class="string">'const     '</span>;</span><br><span class="line">  word[<span class="number">4</span>] := <span class="string">'do        '</span>;</span><br><span class="line">  word[<span class="number">5</span>] := <span class="string">'end       '</span>;</span><br><span class="line">  word[<span class="number">6</span>] := <span class="string">'if        '</span>;</span><br><span class="line">  word[<span class="number">7</span>] := <span class="string">'odd       '</span>;</span><br><span class="line">  word[<span class="number">8</span>] := <span class="string">'procedure '</span>;</span><br><span class="line">  word[<span class="number">9</span>] := <span class="string">'read      '</span>;</span><br><span class="line">  word[<span class="number">10</span>]:= <span class="string">'then      '</span>;</span><br><span class="line">  word[<span class="number">11</span>]:= <span class="string">'var       '</span>;</span><br><span class="line">  word[<span class="number">12</span>]:= <span class="string">'while     '</span>;</span><br><span class="line">  word[<span class="number">13</span>]:= <span class="string">'write     '</span>;</span><br><span class="line"></span><br><span class="line">  wsym[<span class="number">1</span>] := beginsym;</span><br><span class="line">  wsym[<span class="number">2</span>] := callsym;</span><br><span class="line">  wsym[<span class="number">3</span>] := constsym;</span><br><span class="line">  wsym[<span class="number">4</span>] := dosym;</span><br><span class="line">  wsym[<span class="number">5</span>] := endsym;</span><br><span class="line">  wsym[<span class="number">6</span>] := ifsym;</span><br><span class="line">  wsym[<span class="number">7</span>] := oddsym;</span><br><span class="line">  wsym[<span class="number">8</span>] := procsym;</span><br><span class="line">  wsym[<span class="number">9</span>] := readsym;</span><br><span class="line">  wsym[<span class="number">10</span>]:= thensym;</span><br><span class="line">  wsym[<span class="number">11</span>]:= varsym;</span><br><span class="line">  wsym[<span class="number">12</span>]:= whilesym;</span><br><span class="line">  wsym[<span class="number">13</span>]:= writesym;</span><br><span class="line"></span><br><span class="line">  ssym[<span class="string">'+'</span>] := plus;</span><br><span class="line">  ssym[<span class="string">'-'</span>] := minus;</span><br><span class="line">  ssym[<span class="string">'*'</span>] := times;</span><br><span class="line">  ssym[<span class="string">'/'</span>] := slash;</span><br><span class="line">  ssym[<span class="string">'('</span>] := lparen;     </span><br><span class="line">  ssym[<span class="string">')'</span>] := rparen;</span><br><span class="line">  ssym[<span class="string">'='</span>] := eql;</span><br><span class="line">  ssym[<span class="string">','</span>] := comma;</span><br><span class="line">  ssym[<span class="string">'.'</span>] := period;</span><br><span class="line">  ssym[<span class="string">'!'</span>] := neq; <span class="comment">&#123;不等号用!表示&#125;</span></span><br><span class="line">  ssym[<span class="string">'&lt;'</span>] := lss;</span><br><span class="line">  ssym[<span class="string">'&gt;'</span>] := gtr;</span><br><span class="line">  ssym[<span class="string">'@'</span>] := leq; <span class="comment">&#123;小于等于号用@表示&#125;</span></span><br><span class="line">  ssym[<span class="string">'#'</span>] := geq; <span class="comment">&#123;大于等于号用#表示&#125;</span></span><br><span class="line">  ssym[<span class="string">';'</span>] := semicolon;</span><br><span class="line">  <span class="comment">&#123;算符和标点符号的记号&#125;</span></span><br><span class="line"></span><br><span class="line">  mnemonic[lit] := <span class="string">'  LIT  '</span>;</span><br><span class="line">  mnemonic[opr] := <span class="string">'  OPR  '</span>;</span><br><span class="line">  mnemonic[lod] := <span class="string">'  LOD  '</span>;</span><br><span class="line">  mnemonic[sto] := <span class="string">'  STO  '</span>;</span><br><span class="line">  mnemonic[cal] := <span class="string">'  CAL  '</span>;</span><br><span class="line">  mnemonic[int] := <span class="string">'  INT  '</span>;</span><br><span class="line">  mnemonic[jmp] := <span class="string">'  JMP  '</span>;</span><br><span class="line">  mnemonic[jpc] := <span class="string">'  JPC  '</span>;</span><br><span class="line">  mnemonic[red] := <span class="string">'  RED  '</span>;</span><br><span class="line">  mnemonic[wrt] := <span class="string">'  WRT  '</span>;</span><br><span class="line">  <span class="comment">&#123;中间代码指令的字符串&#125;</span></span><br><span class="line"></span><br><span class="line">  declbegsys := [constsym, varsym, procsym];</span><br><span class="line">  <span class="comment">&#123;说明语句的开始符号&#125;</span></span><br><span class="line">  statbegsys := [beginsym, callsym, ifsym, whilesym];</span><br><span class="line">  <span class="comment">&#123;语句的开始符号&#125;</span></span><br><span class="line">  facbegsys := [ident, number, lparen];</span><br><span class="line">  <span class="comment">&#123;因子的开始符号&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// page(output);</span></span><br><span class="line">  err := <span class="number">0</span>; <span class="comment">&#123;发现错误的个数&#125;</span></span><br><span class="line">  cc := <span class="number">0</span>; <span class="comment">&#123;当前行中输入字符的指针&#125;</span></span><br><span class="line">  cx := <span class="number">0</span>; <span class="comment">&#123;代码数组的当前指针&#125;</span></span><br><span class="line">  ll := <span class="number">0</span>; <span class="comment">&#123;输入当前行的长度&#125;</span></span><br><span class="line">  ch := <span class="string">' '</span>; <span class="comment">&#123;当前输入的字符&#125;</span></span><br><span class="line">  kk := al; <span class="comment">&#123;标识符的长度&#125;</span></span><br><span class="line">  getsym; <span class="comment">&#123;取下一个记号&#125;</span></span><br><span class="line">  block(<span class="number">0</span>, <span class="number">0</span>, [period]+declbegsys+statbegsys); <span class="comment">&#123;处理程序体&#125;</span></span><br><span class="line">  <span class="keyword">If</span> sym &lt;&gt; period <span class="keyword">Then</span> error(<span class="number">9</span>);</span><br><span class="line">  <span class="comment">&#123;如果当前记号不是句号, 则出错&#125;</span></span><br><span class="line">  <span class="keyword">If</span> err = <span class="number">0</span> <span class="keyword">Then</span> interpret</span><br><span class="line">  <span class="comment">&#123;如果编译无错误, 则解释执行中间代码&#125;</span></span><br><span class="line">  <span class="keyword">Else</span> </span><br><span class="line">    <span class="keyword">Begin</span></span><br><span class="line">      <span class="keyword">write</span>(<span class="string">'ERRORS In PL/0 Program'</span>);</span><br><span class="line">      <span class="keyword">write</span>(fout, <span class="string">'ERRORS In PL/0 Program'</span>);</span><br><span class="line">    <span class="keyword">End</span>;</span><br><span class="line">  writeln;</span><br><span class="line">  close(fin);</span><br><span class="line">  readln(srcfile);</span><br><span class="line">  close(fout);</span><br><span class="line"><span class="keyword">End</span>.</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/30/CImg-Dlib检测人脸68个特征点-VS2017配置dlib/" rel="next" title="CImg+Dlib检测人脸68个特征点(VS2017配置dlib)">
+                <i class="fa fa-chevron-left"></i> CImg+Dlib检测人脸68个特征点(VS2017配置dlib)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table Des Matières
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Ensemble
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="wuzht">
+            
+              <p class="site-author-name" itemprop="name">wuzht</p>
+              <p class="site-description motion-element" itemprop="description">Je ne sais pas</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">articles</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wuzht" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:770333760@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/ZhengtaoW" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/mrmrwww" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-code"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PL0Compiler"><span class="nav-number">1.</span> <span class="nav-text">PL0Compiler</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实验内容"><span class="nav-number">1.1.</span> <span class="nav-text">实验内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验要做的工作"><span class="nav-number">1.2.</span> <span class="nav-text">实验要做的工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译系统"><span class="nav-number">1.3.</span> <span class="nav-text">编译系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译运行截图"><span class="nav-number">1.4.</span> <span class="nav-text">编译运行截图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">Part 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-2"><span class="nav-number">1.4.2.</span> <span class="nav-text">Part 2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PL0源程序"><span class="nav-number">1.5.</span> <span class="nav-text">PL0源程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-1-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">Part 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-2-1"><span class="nav-number">1.5.2.</span> <span class="nav-text">Part 2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PL0编译程序"><span class="nav-number">1.6.</span> <span class="nav-text">PL0编译程序</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wuzht</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("rkuDUioYuQbzn6tUlV7Np4wX-gzGzoHsz", "Js8j0Y86zBPMfk15rUis2THx");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
